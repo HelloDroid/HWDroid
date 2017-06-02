@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 
 public class BaseDialogFragment extends DialogFragment {
+
     public final static String TAG = "HDBaseDialogFragment";
 
     // Tag
@@ -56,21 +57,21 @@ public class BaseDialogFragment extends DialogFragment {
     /** 存在containerCallback中外部传入的回调 (带Tag区分) */
     public SingleDialogFragmentCallBack containerSingleCallBack;
 
-    /** Fragmet在onStop的时候，进行回调 */
+    /** Fragment在onStop的时候，进行回调 */
     public DialogHandleEvent onStopCallBack;
 
-    /** Fragmet在onCancel的时候，进行回调 */
+    /** Fragment在onCancel的时候，进行回调 */
     public DialogHandleEvent onCancelCallBack;
 
     /** 单选按钮的点击回调 */
     public DialogHandleEvent singleClickCallBack;
 
-    /** Postive按钮的点击回调 */
+    /** Positive按钮的点击回调 */
     public DialogHandleEvent positiveClickCallBack;
     /** Negative按钮的点击回调 */
     public DialogHandleEvent negativeClickCallBack;
 
-    /** Fragmet在Dismss的时候，进行回调 */
+    /** Fragment在Dismiss的时候，进行回调 */
     public DialogHandleEvent dismissCallBack;
 
     /**
@@ -140,7 +141,7 @@ public class BaseDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog d = super.onCreateDialog(savedInstanceState);
 
-        if (null != d) {
+        if (d != null) {
             d.setCanceledOnTouchOutside(isSpaceable);
         }
 

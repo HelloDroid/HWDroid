@@ -360,7 +360,7 @@ public class SPPinnedSectionedListView extends ListView implements OnScrollListe
             return;
         }
 
-        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         mLvFooterFrame.addView(mFooterView, lp);
         mFooterView.setVisibility(View.VISIBLE);
     }

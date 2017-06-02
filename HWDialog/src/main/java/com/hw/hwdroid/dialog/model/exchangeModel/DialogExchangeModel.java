@@ -39,7 +39,7 @@ public class DialogExchangeModel implements Serializable {
     }
 
     public CharSequence getPostiveText() {
-        return dialogExchangeModelBuilder.postiveText;
+        return dialogExchangeModelBuilder.positiveText;
     }
 
     public CharSequence getNegativeText() {
@@ -96,6 +96,7 @@ public class DialogExchangeModel implements Serializable {
 
     public static class DialogExchangeModelBuilder implements Serializable {
         private static final long serialVersionUID = -3548316127754197414L;
+
         /**
          * 弹出框类型
          */
@@ -115,7 +116,7 @@ public class DialogExchangeModel implements Serializable {
         /**
          * 确认按键
          */
-        private CharSequence postiveText = "";
+        private CharSequence positiveText = "";
         /**
          * 取消按键
          */
@@ -198,10 +199,10 @@ public class DialogExchangeModel implements Serializable {
             return this;
         }
 
-        public DialogExchangeModelBuilder setPostiveText(CharSequence postiveText) {
-            this.postiveText = postiveText;
-            if (this.postiveText == null) {
-                this.postiveText = "";
+        public DialogExchangeModelBuilder setPositiveText(CharSequence positiveText) {
+            this.positiveText = positiveText;
+            if (this.positiveText == null) {
+                this.positiveText = "";
             }
             return this;
         }

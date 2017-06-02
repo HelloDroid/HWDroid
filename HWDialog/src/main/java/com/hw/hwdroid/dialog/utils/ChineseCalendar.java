@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * @author <a href="http://www.cnblogs.com/huxi/">Huxi</a>
+ * @author <a href="http://www.cnblogs.com/huxi/"></a>
  */
 public final class ChineseCalendar extends GregorianCalendar {
     private static final long serialVersionUID = 8L;

@@ -9,6 +9,8 @@ import com.hw.hwdroid.dialog.model.DialogType
 import com.hw.hwdroid.dialog.model.exchangeModel.DialogExchangeModel
 
 /**
+ * HW Dialog Manager
+ *
  * Created by ChenJ on 2017/6/2.
  */
 object HWDialogManager {
@@ -29,8 +31,7 @@ object HWDialogManager {
      * @param activity                  FragmentActivity
      * @return BaseDialogFragment
      */
-    @JvmStatic fun showDialogFragment(fragmentManager: FragmentManager, dialogEM: DialogExchangeModel,
-                                      callBackContainer: DialogCallBackContainer? = null, fragment: Fragment? = null, activity: FragmentActivity? = null): BaseDialogFragment? {
+    @JvmStatic fun showDialogFragment(fragmentManager: FragmentManager, dialogEM: DialogExchangeModel, callBackContainer: DialogCallBackContainer? = null, fragment: Fragment? = null, activity: FragmentActivity? = null): BaseDialogFragment? {
         var baseDialogFragment: BaseDialogFragment? = null
 
         val bundle = Bundle()

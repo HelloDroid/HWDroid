@@ -572,7 +572,7 @@ public class HBaseFragment<ViewModelData extends ViewModelFragment> extends Frag
         // 双按钮框
         if (type == DialogType.EXCUTE) {
             builder
-                    .setPostiveText(positiveText)
+                    .setPositiveText(positiveText)
                     .setNegativeText(negativeText);
         }
         // 单按钮框

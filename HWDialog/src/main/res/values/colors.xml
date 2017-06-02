@@ -3,8 +3,8 @@
 
     <color name="transparent">#00000000</color>
 
-    <color name="alertdialog_btn_color">#FF333333</color>
-    <color name="alertdialog_btn_color_tran">#9F333333</color>
-    <color name="alertdialog_text_color">#333</color>
+    <color name="alertDialogButtonColor">#333</color>
+    <color name="alertDialogButtonColorTran">#9F333333</color>
+    <color name="alertDialogTextColor">#333</color>
 
 </resources>

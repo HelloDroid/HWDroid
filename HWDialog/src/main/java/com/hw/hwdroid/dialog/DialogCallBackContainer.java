@@ -15,7 +15,7 @@ public class DialogCallBackContainer {
     public DialogHandleEvent singleClickCallBack;
 
     /**
-     * Postive按钮的点击回调
+     * Positive按钮的点击回调
      */
     public DialogHandleEvent positiveClickCallBack;
 
@@ -25,7 +25,7 @@ public class DialogCallBackContainer {
     public DialogHandleEvent negativeClickCallBack;
 
     /**
-     * Fragmet在Dismss的时候，进行回调
+     * Fragment在Dismiss的时候，进行回调
      */
     public DialogHandleEvent dismissCallBack;
 
@@ -35,12 +35,12 @@ public class DialogCallBackContainer {
     public View customView;
 
     /**
-     * Fragmet在onStop的时候，进行回调
+     * Fragment在onStop的时候，进行回调
      */
     public DialogHandleEvent onStopCallBack;
 
     /**
-     * Fragmet在onCancel的时候，进行回调
+     * Fragment在onCancel的时候，进行回调
      */
     public DialogHandleEvent onCancelCallBack;
 

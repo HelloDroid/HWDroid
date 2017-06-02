@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.hw.hwdroid.dialog.model.exchangeModel.DialogExchangeModel;
 import com.hw.hwdroid.dialog.utils.StringUtils;
-import com.orhanobut.logger.Logger;
-
 
 
 public class HandleInfoDialogFragment extends BaseDialogFragment {
@@ -24,8 +22,8 @@ public class HandleInfoDialogFragment extends BaseDialogFragment {
     private TextView mDlgTitle;
     private TextView mDlgContent;
 
-    private OnClickListener mExcuitePositiveListener;
-    private OnClickListener mExcuiteNegativeListener;
+    private OnClickListener mExecutePositiveListener;
+    private OnClickListener mExecuteNegativeListener;
 
     public static HandleInfoDialogFragment getInstance(Bundle bundle) {
         HandleInfoDialogFragment baseDialogFragment = new HandleInfoDialogFragment();
@@ -103,46 +101,42 @@ public class HandleInfoDialogFragment extends BaseDialogFragment {
             }
         }
 
-        mExcuitePositiveListener = v -> {
-            Fragment tarFragment = getTargetFragment();
-            Activity activity = getActivity();
-            try {
-                if (positiveClickCallBack != null) {
-                    positiveClickCallBack.callBack();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+        mExecutePositiveListener = v -> {
             dismissSelf();
 
+            if (positiveClickCallBack != null) {
+                positiveClickCallBack.callBack();
+            }
+
+            final Activity activity = getActivity();
+            final Fragment tarFragment = getTargetFragment();
+
             // fragment
-            if (tarFragment != null && tarFragment instanceof HandleDialogFragmentEvent) {
+            if (tarFragment != null && tarFragment instanceof HandleDialogFragmentEvent
+                    && tarFragment.getView() != null && tarFragment.getActivity() != null && !tarFragment.getActivity().isFinishing()) {
                 ((HandleDialogFragmentEvent) tarFragment).onPositiveBtnClick(mDialogTag);
             }
             // activity
-            else if (activity != null && activity instanceof HandleDialogFragmentEvent) {
+            else if (activity != null && activity instanceof HandleDialogFragmentEvent && !activity.isFinishing()) {
                 ((HandleDialogFragmentEvent) activity).onPositiveBtnClick(mDialogTag);
             }
         };
 
-        mExcuiteNegativeListener = v -> {
-            try {
-                if (negativeClickCallBack != null) {
-                    negativeClickCallBack.callBack();
-                }
-            } catch (Exception e) {
-                Logger.e(e);
-            }
-
-            Fragment tarFragment = getTargetFragment();
-            Activity activity = getActivity();
-
+        mExecuteNegativeListener = v -> {
             dismissSelf();
 
-            if (tarFragment != null && tarFragment instanceof HandleDialogFragmentEvent) {
+            if (negativeClickCallBack != null) {
+                negativeClickCallBack.callBack();
+            }
+
+            final Fragment tarFragment = getTargetFragment();
+            final Activity activity = getActivity();
+
+
+            if (tarFragment != null && tarFragment instanceof HandleDialogFragmentEvent
+                    && tarFragment.getView() != null && tarFragment.getActivity() != null && !tarFragment.getActivity().isFinishing()) {
                 ((HandleDialogFragmentEvent) tarFragment).onNegtiveBtnClick(mDialogTag);
-            } else if (activity != null && activity instanceof HandleDialogFragmentEvent) {
+            } else if (activity != null && activity instanceof HandleDialogFragmentEvent && !activity.isFinishing()) {
                 ((HandleDialogFragmentEvent) activity).onNegtiveBtnClick(mDialogTag);
             }
         };
@@ -153,26 +147,26 @@ public class HandleInfoDialogFragment extends BaseDialogFragment {
             } else {
                 mRightBtn.setText(R.string.ok);
             }
-            mRightBtn.setOnClickListener(mExcuitePositiveListener);
+            mRightBtn.setOnClickListener(mExecutePositiveListener);
             if (!StringUtils.isEmptyOrNull(mNegativeBtnTxt.toString())) {
                 mLeftBtn.setText(mNegativeBtnTxt);
             } else {
                 mLeftBtn.setText(R.string.cancel);
             }
-            mLeftBtn.setOnClickListener(mExcuiteNegativeListener);
+            mLeftBtn.setOnClickListener(mExecuteNegativeListener);
         } else {
             if (!StringUtils.isEmptyOrNull(mPositiveBtnTxt.toString())) {
                 mLeftBtn.setText(mPositiveBtnTxt);
             } else {
                 mLeftBtn.setText(R.string.ok);
             }
-            mLeftBtn.setOnClickListener(mExcuitePositiveListener);
+            mLeftBtn.setOnClickListener(mExecutePositiveListener);
             if (!StringUtils.isEmptyOrNull(mNegativeBtnTxt.toString())) {
                 mRightBtn.setText(mNegativeBtnTxt);
             } else {
                 mRightBtn.setText(R.string.cancel);
             }
-            mRightBtn.setOnClickListener(mExcuiteNegativeListener);
+            mRightBtn.setOnClickListener(mExecuteNegativeListener);
         }
         // ColorDrawable colorDrawable = new
         // ColorDrawable(getResources().getColor(R.color.background_dialog));

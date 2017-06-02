@@ -90,7 +90,7 @@ public class SingleExpandableListView extends ExpandableListView
 			return;
 		}
 
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
 		mLvHeaderFrame.addView(mHeaderView, lp);
 		mHeaderView.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class SingleExpandableListView extends ExpandableListView
 			return;
 		}
 
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
 		mLvFooterFrame.addView(mFooterView, lp);
 		mFooterView.setVisibility(View.VISIBLE);

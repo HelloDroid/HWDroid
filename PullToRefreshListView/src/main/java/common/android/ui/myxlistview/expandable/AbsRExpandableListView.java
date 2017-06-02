@@ -474,7 +474,7 @@ public abstract class AbsRExpandableListView extends ExpandableListView implemen
             return;
         }
 
-        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         mLvExtendHeaderFrame.addView(mExtendHeaderView, lp);
         mExtendHeaderView.setVisibility(View.VISIBLE);
@@ -508,7 +508,7 @@ public abstract class AbsRExpandableListView extends ExpandableListView implemen
             return;
         }
 
-        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         mLvExtendFooterFrame.addView(mExtendFooterView, lp);
         mExtendFooterView.setVisibility(View.VISIBLE);

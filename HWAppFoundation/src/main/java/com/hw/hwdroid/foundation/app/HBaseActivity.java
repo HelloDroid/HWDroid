@@ -967,7 +967,7 @@ public class HBaseActivity<ViewModelData extends ViewModelActivity> extends AppC
         // 双按钮框
         if (type == DialogType.EXCUTE) {
             builder
-                    .setPostiveText(positiveText)
+                    .setPositiveText(positiveText)
                     .setNegativeText(negativeText);
         }
         // 单按钮框

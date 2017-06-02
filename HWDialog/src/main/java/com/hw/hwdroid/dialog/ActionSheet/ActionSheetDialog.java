@@ -31,7 +31,6 @@ import java.util.List;
  * <p>
  * Created by ChenJ on 2017/5/4.
  */
-
 public class ActionSheetDialog extends Dialog {
     private RecyclerView mRecyclerView;
 
@@ -42,7 +41,7 @@ public class ActionSheetDialog extends Dialog {
     private TextView mTitleTv;
 
     private int selectedColor;
-    private boolean useSelectedColoe;
+    private boolean useSelectedColse;
     private ColorStateList colorStateList;
 
     private int selectedIndex;
@@ -64,7 +63,6 @@ public class ActionSheetDialog extends Dialog {
         view = LayoutInflater.from(context).inflate(R.layout.action_sheet_layout, null);
         setContentView(view);
 
-
         setSelectedColor(selectedColorResId);
         setColorStateList(useThemStyle ? R.color.action_sheet_textcolor_selector_theme : R.color.action_sheet_textcolor_selector);
 
@@ -74,7 +72,6 @@ public class ActionSheetDialog extends Dialog {
         if (this.actions.size() > 6) {
             mRecyclerView.getLayoutParams().height = Util.dp2px(context, 45F) * 6 + 5;
         }
-
 
         Window window = getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -119,11 +116,11 @@ public class ActionSheetDialog extends Dialog {
 
     public void setSelectedColor(@ColorRes int id) {
         if (id < 0 || id == View.NO_ID) {
-            this.useSelectedColoe = false;
+            this.useSelectedColse = false;
             return;
         }
 
-        this.useSelectedColoe = true;
+        this.useSelectedColse = true;
         this.selectedColor = getContext().getResources().getColor(id);
     }
 
@@ -157,7 +154,7 @@ public class ActionSheetDialog extends Dialog {
             final String item = StringUtils.changeNullOrWhiteSpace(actions.get(position));
             holder.itemTextView.setText(item);
 
-            if (useSelectedColoe) {
+            if (useSelectedColse) {
                 if (selectedIndex == position) {
                     holder.itemTextView.setTextColor(selectedColor);
                 } else {
@@ -169,7 +166,7 @@ public class ActionSheetDialog extends Dialog {
             holder.itemTextView.setOnClickListener(v -> {
                 selectedIndex = position;
 
-                if (useSelectedColoe) {
+                if (useSelectedColse) {
                     notifyDataSetChanged();
                 }
 

@@ -66,23 +66,11 @@ public class PickerDateDialog extends Dialog {
             yearInit = initCal.get(Calendar.YEAR);
             mGLCView.initYearSpan(yearInit, yearStart, yearEnd);
             mGLCView.init(initCal);
-            //            String showToast = "Gregorian : " + initCal.get(Calendar.YEAR) + "-"
-            //                    + (initCal.get(Calendar.MONTH) + 1) + "-"
-            //                    + initCal.get(Calendar.DAY_OF_MONTH);
-            //            Toast.makeText(mContext.getApplicationContext(), showToast, Toast.LENGTH_LONG).show();
             dismiss();
         });
 
         view.findViewById(R.id.ok_btn).setOnClickListener(v -> {
             GregorianLunarCalendarView.CalendarData calendarData = mGLCView.getCalendarData();
-            //            Calendar calendar = calendarData.getCalendar();
-            //            String showToast = "Gregorian : " + calendar.get(Calendar.YEAR) + "-"
-            //                    + (calendar.get(Calendar.MONTH) + 1) + "-"
-            //                    + calendar.get(Calendar.DAY_OF_MONTH) + "\n"
-            //                    + "Lunar     : " + calendar.get(ChineseCalendar.CHINESE_YEAR) + "-"
-            //                    + (calendar.get(ChineseCalendar.CHINESE_MONTH)) + "-"
-            //                    + calendar.get(ChineseCalendar.CHINESE_DATE);
-            //            Toast.makeText(mContext.getApplicationContext(), showToast, Toast.LENGTH_LONG).show();
 
             initCal = calendarData.chineseCalendar;
             dismiss();
