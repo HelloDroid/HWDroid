@@ -1,0 +1,44 @@
+<resources>
+
+    <style name="WindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/common_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/common_fade_out</item>
+    </style>
+
+    <style name="Animation.Activity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/common_anim_window_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/common_anim_window_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/common_anim_window_close_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/common_anim_window_close_out</item>
+    </style>
+
+    <style name="Animation.Activity.PullDown">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_pullddown_enter_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_pullddown_enter_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_pullddown_back_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_pullddown_back_out</item>
+
+        <item name="android:taskOpenEnterAnimation">@anim/activity_pullddown_enter_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/activity_pullddown_enter_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/activity_pullddown_back_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/activity_pullddown_back_out</item>
+    </style>
+
+    <style name="Animation.Activity.PullUp">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_pullup_enter_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_pullup_enter_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_pullup_back_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_pullup_back_out</item>
+
+        <item name="android:taskOpenEnterAnimation">@anim/activity_pullup_enter_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/activity_pullup_enter_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/activity_pullup_back_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/activity_pullup_back_out</item>
+    </style>
+
+    <style name="Animation.SlideFromBottom" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+    </style>
+
+</resources>

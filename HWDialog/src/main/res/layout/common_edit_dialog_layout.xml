@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/container"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:clickable="true"
+             android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/my_alert_dialog_bg"
+        android:clickable="true">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titel_text"
+                style="@style/HWDialog.Title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                tools:text="登录安全提醒"/>
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip">
+
+                    <TextView
+                        android:id="@+id/content_text"
+                        style="@style/HWDialog.Content"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="12dip"
+                        android:paddingTop="8dip"
+                        tools:text="您的登录密码过于简单，为确保账户及资金的安全，请尽快修改。"/>
+
+                    <EditText
+                        android:id="@+id/edit_text"
+                        style="@style/HWDialog.Content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/edit_dialog_edit_bg"
+                        android:gravity="left"
+                        android:paddingBottom="8dip"
+                        android:paddingLeft="5dip"
+                        android:paddingRight="5dip"
+                        android:paddingTop="8dip"
+                        tools:hint="6-20 位字母，数字或符号"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dip"
+            android:layout_below="@+id/content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include layout="@layout/my_alert_dialog_line"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lef_btn"
+                    style="@style/HWDialog.Button"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    tools:text="稍后修改"/>
+
+
+                <include
+                    android:id="@+id/btn_line"
+                    layout="@layout/my_alert_dialog_line_vertical"/>
+
+                <TextView
+                    android:id="@+id/right_btn"
+                    style="@style/HWDialog.Button"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    tools:text="确认修改"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

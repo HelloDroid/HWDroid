@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:clickable="true">
+
+    <RelativeLayout
+        android:id="@+id/process_main_layout"
+        android:layout_width="112dip"
+        android:layout_height="112dip"
+        android:layout_gravity="center"
+        android:background="@drawable/common_loading_progress_dialog_bg">
+
+        <FrameLayout
+            android:id="@+id/progressbar_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dip">
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="75dip"
+                android:layout_height="75dip"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateDrawable="@drawable/common_loading_progress"
+                android:indeterminateOnly="true"/>
+
+            <ImageView
+                android:layout_width="75dip"
+                android:layout_height="75dip"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/common_loading_icon"
+                android:visibility="visible"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tip"
+            style="@style/HWDialog.Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressbar_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp"/>
+
+        <View
+            android:id="@+id/btn_cancel"
+            android:layout_width="18dip"
+            android:layout_height="18dip"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:background="@mipmap/common_progress_cancel"/>
+    </RelativeLayout>
+
+</FrameLayout>

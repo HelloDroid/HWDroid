@@ -1,0 +1,17 @@
+<resources>
+    <dimen name="rectangle_radius">2dp</dimen>
+
+    <!-- btn hight -->
+    <dimen name="btn_h">44dp</dimen>
+    <dimen name="btn_h_mini">38dp</dimen>
+
+    <!-- Toolbar Padding size:?attr/actionBarSize-->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="elevation_h">0dp</dimen>
+    <dimen name="tools_bar_size">46dp</dimen>
+    <dimen name="comm_title_bar_h">46dp</dimen>
+    <dimen name="tool_bar_top_padding">0dp</dimen>
+
+    <dimen name="default_list_pHeaderH">50dp</dimen>
+
+</resources>

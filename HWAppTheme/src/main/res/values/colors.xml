@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+
+    <!-- Theme colors -->
+    <!--
+        Theme colors <color name="ripple_color">?attr/colorControlHighlight</color>
+        #FF03B9FF
+     -->
+    <color name="colorPrimary">@color/material_blue_500</color>
+    <color name="colorPrimaryDark">@color/material_blue_700</color>
+    <color name="colorAccent">@color/material_blue_500</color>
+    <color name="windowBackground">#FFECECEC</color>
+    <color name="dialogBackground">#99000000</color>
+    <color name="colorPrimaryDisable">#FFCCCCCC</color>
+    <color name="colorPrimaryTranslucent">#9F03B9FF</color>
+    <color name="rippleColor">#ffeeeeee</color>
+    <color name="colorButtonNormal">@color/colorPrimary</color>
+    <color name="colorButtonDisable">@color/colorPrimaryDisable</color>
+    <color name="colorButtonTranslucent">@color/colorPrimaryTranslucent</color>
+
+    <color name="colorPrimaryLight">#FFF9F9F9</color>
+    <color name="colorPrimaryDarkLight">#FFF9F9F9</color>
+
+    <!-- 默认字体颜色 -->
+    <color name="textColorPrimary">#FF333333</color>
+    <color name="textColorPrimaryTranslucent">#9F333333</color>
+    <color name="textColorPrimaryDisable">#FF999999</color>
+    <color name="textColorPrimaryHint">#FFCCCCCC</color>
+    <color name="textColorPrimaryHintEdit">#FFCCCCCC</color>
+
+    <color name="itemColor">#FFF5F5F5</color>
+    <color name="dividerColor">#FFDDDDDD</color>
+    <color name="dividerChildColor">#FFDDDDDD</color>
+
+    <color name="orange">#FFFF9A14</color>
+    <color name="orangeTranslucent">#CFFF9A14</color>
+
+    <!-- 默认描边矩形颜色 -->
+    <color name="solid_default_primary">@android:color/white</color>
+
+    <!-- general text colors -->
+    <color name="text">#212121</color>
+    <color name="secondary">#727272</color>
+    <color name="hint">#B8B8B8</color>
+    <color name="dividers">#DADADA</color>
+
+    <!-- general colors for drawer -->
+    <color name="listBackground">#F2F2F2</color>
+    <!-- primary colors for drawer -->
+    <color name="listBackgroundNormal">#FCFCFC</color>
+    <!-- secondary colors for drawer -->
+    <color name="listBackgroundSecondaryNormal">#F2F2F2</color>
+</resources>

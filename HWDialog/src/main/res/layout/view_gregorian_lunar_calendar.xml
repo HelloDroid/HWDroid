@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.hw.hwdroid.dialog.wegit.CNumberPickerView
+        android:id="@+id/picker_year"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="year_picker"
+        app:c_npv_AlternativeTextArrayWithoutMeasureHint="@array/npv_lunar_year_without_measure_hint"
+        app:c_npv_HintText="@string/year"
+        app:c_npv_ItemPaddingHorizontal="5dp"
+        app:c_npv_ItemPaddingVertical="12dp"
+
+
+        app:c_npv_RespondChangeOnDetached="false"
+        app:c_npv_TextColorNormal="@color/textColorPrimary"
+        app:c_npv_TextColorSelected="@color/colorPrimary"
+        app:c_npv_TextSizeHint="12dp"
+        app:c_npv_TextSizeNormal="14dp"
+        app:c_npv_TextSizeSelected="17dp"
+
+
+        />
+
+    <com.hw.hwdroid.dialog.wegit.CNumberPickerView
+        android:id="@+id/picker_month"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_weight="1"
+        android:contentDescription="month_picker"
+        app:c_npv_AlternativeTextArrayWithoutMeasureHint="@array/npv_lunar_month_without_measure_hint"
+        app:c_npv_HintText="@string/month"
+        app:c_npv_ItemPaddingHorizontal="5dp"
+        app:c_npv_ItemPaddingVertical="12dp"
+
+        app:c_npv_RespondChangeOnDetached="false"
+        app:c_npv_TextColorNormal="@color/textColorPrimary"
+        app:c_npv_TextColorSelected="@color/colorPrimary"
+        app:c_npv_TextSizeHint="12dp"
+        app:c_npv_TextSizeNormal="14dp"
+        app:c_npv_TextSizeSelected="17dp"
+        />
+
+    <com.hw.hwdroid.dialog.wegit.CNumberPickerView
+        android:id="@+id/picker_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="day_picker"
+        app:c_npv_AlternativeHint="@string/day"
+        app:c_npv_AlternativeTextArrayWithMeasureHint="@array/npv_lunar_day_with_measure_hint"
+        app:c_npv_AlternativeTextArrayWithoutMeasureHint="@array/npv_lunar_day_with_measure_hint"
+        app:c_npv_HintText="@string/day"
+        app:c_npv_ItemPaddingHorizontal="5dp"
+        app:c_npv_ItemPaddingVertical="12dp"
+
+        app:c_npv_RespondChangeOnDetached="false"
+        app:c_npv_TextColorNormal="@color/textColorPrimary"
+        app:c_npv_TextColorSelected="@color/colorPrimary"
+        app:c_npv_TextSizeHint="12dp"
+        app:c_npv_TextSizeNormal="14dp"
+        app:c_npv_TextSizeSelected="17dp"
+        />
+
+</merge>

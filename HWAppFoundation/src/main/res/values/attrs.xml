@@ -1,0 +1,19 @@
+<resources>
+
+
+    <declare-styleable name="HTitleBarView">
+        <attr name="htitlebar_onlytitle" format="boolean"/>
+        <attr name="htitlebar_onlyback" format="boolean"/>
+        <attr name="htitlebar_back_home" format="boolean"/>
+        <attr name="htitlebar_back_righttext" format="boolean"/>
+        <attr name="htitlebar_left_righttext" format="boolean"/>
+
+        <attr name="htitlebar_title_text" format="string" localization="suggested"/>
+        <attr name="htitlebar_subtitle_text" format="string" localization="suggested"/>
+
+        <!-- left_text存在时 backButton会被隐藏-->
+        <attr name="htitlebar_left_text" format="string" localization="suggested"/>
+        <attr name="htitlebar_right_text" format="string" localization="suggested"/>
+    </declare-styleable>
+
+</resources>

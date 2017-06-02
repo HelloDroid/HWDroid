@@ -1,0 +1,14 @@
+<resources>
+
+    <!--
+            windowTranslucentStatus=true时，需要手动在最最外层Layout设置fitsSystemWindows=true,
+            否则，toolbar会与状态重合
+            windowTranslucentStatus=false，toolbar不会与状态栏重合，类似微信功能
+
+    <style name="AppTheme.NoActionBar.TranslucentStatus">
+
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+-->
+
+</resources>

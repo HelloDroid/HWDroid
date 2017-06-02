@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">MyXListView</string>
+
+    <!-- 上拉下拉 -->
+    <string name="listview_header_hint_normal">下拉可以刷新</string>
+    <string name="listview_header_hint_ready">松开立即刷新</string>
+    <string name="listview_header_hint_loading">正在刷新&#8230;</string>
+    <string name="listview_header_last_time">最后更新:%1s</string>
+    <string name="footer_hint_normal">查看更多</string>
+    <string name="listview_footer_hint_ready">松开立即获取更多</string>
+
+    <!-- pull to refresh -->
+    <string name="pull_to_refresh_pull_label_4top">下拉可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开立即刷新</string>
+    <string name="pull_to_refresh_refreshing_label">正在刷新&#8230;</string>
+    <string name="pull_to_refresh_pull_label_4bottom">上拉获取更多</string>
+
+
+    <string name="load_more">正在加载...</string>
+    <string name="loading_done">加载完成</string>
+    <string name="load_no_more">没有更多了</string>
+    <string name="refresh_done">刷新完成</string>
+
+    <string name="xr_header_last_time">最后更新:</string>
+    <string name="xr_time_just">刚刚</string>
+    <string name="xr_time_beforeSeconds">秒前</string>
+    <string name="xr_time_beforeMinute">分钟前</string>
+    <string name="xr_time_beforeHours">小时前</string>
+    <string name="xr_time_beforeDay">天前</string>
+    <string name="xr_time_beforeMonth">月前</string>
+    <string name="xr_time_beforeYear">年前</string>
+
+</resources>

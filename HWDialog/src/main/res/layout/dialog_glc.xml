@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="320dp"
+              android:layout_height="wrap_content"
+              android:background="@color/windowBackground"
+              android:minWidth="320dp"
+              android:orientation="vertical"
+    >
+
+    <!--
+    公历-农历
+    <cn.carbs.android.indicatorview.library.IndicatorView
+        android:id="@+id/indicator_view"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="#ffeeeeee"
+        app:iv_IndicatorColorEnd="@color/colorLunar"
+        app:iv_IndicatorColorGradient="true"
+        app:iv_IndicatorColorStart="@color/colorGregorian"
+        app:iv_IndicatorEven="true"
+        app:iv_IndicatorHeight="2dp"
+        app:iv_IndicatorTextArray="@array/indicator_string_array"
+        app:iv_IndicatorTextSize="16dp"/>
+    -->
+
+    <!--
+        GregorianThemeColor-公历颜色
+        LunarThemeColor-农历颜色
+     -->
+    <com.hw.hwdroid.dialog.wegit.GregorianLunarCalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:minHeight="160dp"
+        app:glcv_GregorianThemeColor="@color/colorPrimary"
+        app:glcv_LunarThemeColor="@color/colorPrimary"
+        app:glcv_NormalTextColor="@color/textColorPrimary"
+        app:glcv_ScrollAnimation="true"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/divider_line"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/action_sheet_textcolor_selector_theme"
+            />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_line"
+            />
+
+        <TextView
+            android:id="@+id/ok_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="@color/action_sheet_textcolor_selector_theme"
+            />
+    </LinearLayout>
+
+</LinearLayout>

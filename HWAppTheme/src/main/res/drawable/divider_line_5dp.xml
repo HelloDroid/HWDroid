@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/dividerColor"/>
+
+    <!--需要设置高度，否则不显示-->
+    <size android:height="5dp"/>
+
+</shape>

@@ -1,0 +1,70 @@
+<resources>
+
+    <!-- 自定义对话框的Title -->
+    <style name="HWDialog.Title" parent="BaseDialogTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/alertdialog_text_color</item>
+        <item name="android:textSize">16dp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 自定义对话框的Content Message -->
+    <style name="HWDialog.Content" parent="BaseDialogTheme">
+        <item name="android:textColor">@color/alertdialog_text_color</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 自定义对话框的按钮 -->
+    <style name="HWDialog.Button" parent="BaseDialogTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_transparent</item>
+        <item name="android:textColor">@color/my_alert_btn_textcolor_selector</item>
+    </style>
+
+    <style name="PermissionDialog" parent="BaseDialogTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="Slide.FromBottom" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+    </style>
+
+    <style name="DialogTheme" parent="BaseDialogTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- 自定义Dialog Theme -->
+    <style name="DialogTheme.Full">
+        <item name="android:padding">0dp</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

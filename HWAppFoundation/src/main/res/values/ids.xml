@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="content" type="id"/>
+    <item name="root_view" type="id"/>
+    <item name="list_view" type="id"/>
+
+
+    <item name="appBar" type="id"/>     <!-- android.support.design.widget.AppBarLayout -->
+    <item name="toolbar" type="id"/>    <!-- android.support.v7.widget.Toolbar -->
+    <item name="titleBar" type="id"/>   <!-- common.android.foundation.widget.TitleBarView -->
+
+    <item name="toolbar_content" type="id"/>
+    <item name="titleBar_title_tv" type="id"/>
+    <item name="titleBar_subTitle_tv" type="id"/>
+    <item name="titleBar_left" type="id"/>
+    <item name="titleBar_back" type="id"/>
+    <item name="titleBar_left_tv" type="id"/>
+    <item name="titleBar_right" type="id"/>
+    <item name="titleBar_btnImage" type="id"/>
+    <item name="titleBar_right_tv" type="id"/>
+    <item name="titleBar_center" type="id"/>
+
+
+</resources>

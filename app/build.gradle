@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        applicationId "com.hw.hwdroid"
+        versionCode 1
+        versionName "1.0"
+
+//        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    // http://stackoverflow.com/questions/20673888/duplicate-files-copied-android-studio-0-4-0
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    // java版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 签名信息
+    signingConfigs {
+        release {
+            storeFile file("common.keystore")
+            storePassword "android"
+            keyAlias "common"
+            keyPassword "android"
+        }
+    }
+
+    buildTypes {
+        // debug模式
+        debug {
+            signingConfig signingConfigs.release
+        }
+
+        release {
+            // 是否进行混淆
+            minifyEnabled true
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources true
+            // 混淆文件的位置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+        checkAllWarnings false
+        checkReleaseBuilds false
+        ignoreWarnings true
+        quiet true
+    }
+
+    // 增量编译
+//    dexOptions {
+//        jumboMode true
+//        incremental true
+//        javaMaxHeapSize "4g"
+//    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile project(':HWAppFoundation')
+
+
+    compile deps.design
+    compile deps.supportV4
+    compile deps.appcompatV7
+    compile deps.recyclerview
+    compile deps.constraintLayout
+    compile deps.kotlinStdlib
+
+    testCompile deps.junit
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+}
