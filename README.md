@@ -1,8 +1,3 @@
-# HWDroid
-Android
-
-```
-git push -u origin master
-```
+# HWDroid Android
 
 
