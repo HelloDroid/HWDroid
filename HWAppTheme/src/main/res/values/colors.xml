@@ -19,8 +19,8 @@
     <color name="colorButtonDisable">@color/colorPrimaryDisable</color>
     <color name="colorButtonTranslucent">@color/colorPrimaryTranslucent</color>
 
-    <color name="colorPrimaryLight">#FFF9F9F9</color>
-    <color name="colorPrimaryDarkLight">#FFF9F9F9</color>
+    <color name="colorPrimaryLight">#FFEBEBEB</color>
+    <color name="colorPrimaryLightDark">#FFBCBCBC</color>
 
     <!-- 默认字体颜色 -->
     <color name="textColorPrimary">#FF333333</color>

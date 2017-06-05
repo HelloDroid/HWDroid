@@ -62,7 +62,7 @@
     </style>
 
     <style name="HWToolbar.Light">
-        <item name="android:background">@color/colorPrimaryLight</item>
+        <!--<item name="android:background">@color/colorPrimaryLight</item>-->
     </style>
 
     <style name="HWToolbar.Light.FixH">
