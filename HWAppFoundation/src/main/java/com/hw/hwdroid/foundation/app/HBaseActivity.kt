@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.TextView
+import android.widget.Toast
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.hw.hwdroid.dialog.*
@@ -34,6 +35,7 @@ import com.hw.hwdroid.foundation.app.rx.bus.HRxBus
 import com.hw.hwdroid.foundation.app.widget.HTitleBarView
 import com.hw.hwdroid.foundation.utils.GUIDUtils
 import com.hw.hwdroid.foundation.utils.ResourceUtils
+import com.hw.hwdroid.foundation.utils.toast.ToastUtils
 import com.orhanobut.logger.Logger
 import common.android.foundation.app.HActivityStack
 import java.util.*
@@ -870,6 +872,14 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         // 标题，back可点击，空白可点击
         builder.setDialogTitle(title).setBackable(cancelForBack).setSpaceable(cancelForClickSpace).setHasTitle(!StringUtils.isEmptyOrNull(title))
         return HWDialogManager.showDialogFragment(supportFragmentManager, builder.create(), callBack, fragment, this)
+    }
+
+    fun toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+        ToastUtils.show(applicationContext, message, Gravity.CENTER, 0, 0, duration)
+    }
+
+    fun toast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT) {
+        ToastUtils.show(applicationContext, ResourceUtils.getString(applicationContext, resId, ""), Gravity.CENTER, 0, 0, duration)
     }
 
     /**
