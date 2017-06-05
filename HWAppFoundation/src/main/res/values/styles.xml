@@ -3,50 +3,69 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 标题栏 -->
-    <style name="TitleBar" parent="">
+    <style name="TitleBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/comm_title_bar_h</item>
+    </style>
+
+    <style name="TitleBar.Divider">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">#FFDDDDDD</item>
     </style>
 
     <!-- 标题中的标题 -->
     <style name="TitleBar.Title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_title_big</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="TitleBar.Back">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:scaleType">centerInside</item>
-
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">12dp</item>
-
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingBottom">6dp</item>
+    <style name="TitleBar.Title.Sub">
+        <item name="android:textSize">@dimen/text_size_normal_smallest</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray_white_b8e1f4</item>
     </style>
 
+
     <style name="TitleBar.Button">
+        <item name="android:maxLines">2</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:minWidth">46dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:scaleType">centerInside</item>
+        <item name="android:textColor">@color/text_white_selector</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
 
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">10dp</item>
+    <style name="TitleBar.Button.Back">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:minWidth">44dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:scaleType">centerInside</item>
+        <!--<item name="android:tint">#321</item>-->
+    </style>
 
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingBottom">6dp</item>
+    <style name="TitleBar.Button.Negative">
+        <item name="android:background">@null</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/text_white_selector</item>
+    </style>
 
-        <item name="android:layout_marginRight">0dp</item>
-        <item name="android:layout_alignParentRight">true</item>
+    <style name="TitleBar.Button.Positive">
+        <item name="android:background">@null</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/text_white_selector</item>
     </style>
 
 </resources>

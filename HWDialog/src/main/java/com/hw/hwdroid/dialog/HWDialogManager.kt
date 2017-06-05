@@ -31,8 +31,8 @@ object HWDialogManager {
      * @param activity                  FragmentActivity
      * @return BaseDialogFragment
      */
-    @JvmStatic fun showDialogFragment(fragmentManager: FragmentManager, dialogEM: DialogExchangeModel, callBackContainer: DialogCallBackContainer? = null, fragment: Fragment? = null, activity: FragmentActivity? = null): BaseDialogFragment? {
-        var baseDialogFragment: BaseDialogFragment? = null
+    @JvmStatic fun showDialogFragment(fragmentManager: FragmentManager, dialogEM: DialogExchangeModel, callBackContainer: DialogCallBackContainer? = null, fragment: Fragment? = null, activity: FragmentActivity? = null): BaseDialogFragment {
+        var baseDialogFragment: BaseDialogFragment
 
         val bundle = Bundle()
         val dialogType = dialogEM.dialogType
@@ -57,6 +57,10 @@ object HWDialogManager {
         // 编辑输入
         else if (dialogType == DialogType.EDIT) {
             baseDialogFragment = EditDialogFragment.getInstance(bundle)
+        }
+        // 默认为双按钮框
+        else {
+            baseDialogFragment = HandleInfoDialogFragment.getInstance(bundle)
         }
 
         baseDialogFragment?.compatibilityListener = dialogEM.compatibilityListener

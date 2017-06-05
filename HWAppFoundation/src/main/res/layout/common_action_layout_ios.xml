@@ -39,6 +39,7 @@
                 android:id="@id/titleBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:htitlebar_ios="true"
                 app:htitlebar_mode="back_title"
                 />
         </android.support.v7.widget.Toolbar>

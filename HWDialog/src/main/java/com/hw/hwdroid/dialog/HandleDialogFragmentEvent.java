@@ -14,5 +14,5 @@ public interface HandleDialogFragmentEvent {
      *
      * @param tag
      */
-    void onNegtiveBtnClick(String tag);
+    void onNegativeBtnClick(String tag);
 }

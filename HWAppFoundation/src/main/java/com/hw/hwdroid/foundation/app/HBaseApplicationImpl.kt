@@ -1,9 +1,13 @@
 package com.hw.hwdroid.foundation.app
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import android.view.Gravity
+import android.widget.Toast
 import com.hw.hwdroid.foundation.BuildConfig
+import com.hw.hwdroid.foundation.utils.toast.ToastUtils
 import com.orhanobut.logger.LogLevel
 import com.orhanobut.logger.Logger
 import common.android.foundation.app.HActivityLifecycleHelper
@@ -14,7 +18,7 @@ import common.android.foundation.app.HActivityLifecycleHelper
  *
  * Created by chen.jiana on 2015/9/28.
  */
-class HBaseApplicationImpl : Application() {
+open class HBaseApplicationImpl : Application() {
 
     /**
      * @see android.content.ContextWrapper.getApplicationContext
@@ -59,5 +63,8 @@ class HBaseApplicationImpl : Application() {
         Logger.d("onLowMemory...")
     }
 
+    fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+        ToastUtils.show(applicationContext, message, Gravity.CENTER, 0, 0, duration)
+    }
 
 }

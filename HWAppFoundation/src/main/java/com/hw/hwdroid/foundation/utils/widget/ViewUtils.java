@@ -118,5 +118,46 @@ public class ViewUtils {
         });
     }
 
+    public static boolean containView(ViewGroup viewGroup, View view) {
+        if (viewGroup == null || view == null) {
+            return false;
+        }
+
+        return viewGroup.indexOfChild(view) != -1;
+    }
+
+    public static boolean removeView(ViewGroup viewGroup, View view) {
+        try {
+            if (containView(viewGroup, view)) {
+                viewGroup.removeView(view);
+                return true;
+            }
+        } catch (Exception e) {
+        }
+
+        return false;
+    }
+
+    public static boolean addView(ViewGroup viewGroup, View view, boolean checkContains) {
+        try {
+            if (viewGroup == null || view == null) {
+                return false;
+            }
+
+            if (!checkContains) {
+                viewGroup.addView(view);
+                return true;
+            }
+
+            if (!containView(viewGroup, view)) {
+                viewGroup.addView(view);
+                return true;
+            }
+        } catch (Exception e) {
+        }
+
+        return false;
+    }
+
 
 }

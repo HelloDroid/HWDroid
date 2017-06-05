@@ -135,39 +135,28 @@ public class HandleInfoDialogFragment extends BaseDialogFragment {
 
             if (tarFragment != null && tarFragment instanceof HandleDialogFragmentEvent
                     && tarFragment.getView() != null && tarFragment.getActivity() != null && !tarFragment.getActivity().isFinishing()) {
-                ((HandleDialogFragmentEvent) tarFragment).onNegtiveBtnClick(mDialogTag);
+                ((HandleDialogFragmentEvent) tarFragment).onNegativeBtnClick(mDialogTag);
             } else if (activity != null && activity instanceof HandleDialogFragmentEvent && !activity.isFinishing()) {
-                ((HandleDialogFragmentEvent) activity).onNegtiveBtnClick(mDialogTag);
+                ((HandleDialogFragmentEvent) activity).onNegativeBtnClick(mDialogTag);
             }
         };
 
-        if (android.os.Build.VERSION.SDK_INT >= 14) {
-            if (!StringUtils.isEmptyOrNull(mPositiveBtnTxt.toString())) {
-                mRightBtn.setText(mPositiveBtnTxt);
-            } else {
-                mRightBtn.setText(R.string.ok);
-            }
-            mRightBtn.setOnClickListener(mExecutePositiveListener);
-            if (!StringUtils.isEmptyOrNull(mNegativeBtnTxt.toString())) {
-                mLeftBtn.setText(mNegativeBtnTxt);
-            } else {
-                mLeftBtn.setText(R.string.cancel);
-            }
-            mLeftBtn.setOnClickListener(mExecuteNegativeListener);
+        if (!StringUtils.isNullOrWhiteSpace(mPositiveBtnTxt.toString())) {
+            mRightBtn.setText(mPositiveBtnTxt);
         } else {
-            if (!StringUtils.isEmptyOrNull(mPositiveBtnTxt.toString())) {
-                mLeftBtn.setText(mPositiveBtnTxt);
-            } else {
-                mLeftBtn.setText(R.string.ok);
-            }
-            mLeftBtn.setOnClickListener(mExecutePositiveListener);
-            if (!StringUtils.isEmptyOrNull(mNegativeBtnTxt.toString())) {
-                mRightBtn.setText(mNegativeBtnTxt);
-            } else {
-                mRightBtn.setText(R.string.cancel);
-            }
-            mRightBtn.setOnClickListener(mExecuteNegativeListener);
+            mRightBtn.setText(R.string.ok);
         }
+
+        if (!StringUtils.isNullOrWhiteSpace(mNegativeBtnTxt.toString())) {
+            mLeftBtn.setText(mNegativeBtnTxt);
+        } else {
+            mLeftBtn.setText(R.string.cancel);
+        }
+
+
+        mRightBtn.setOnClickListener(mExecutePositiveListener);
+        mLeftBtn.setOnClickListener(mExecuteNegativeListener);
+
         // ColorDrawable colorDrawable = new
         // ColorDrawable(getResources().getColor(R.color.background_dialog));
         // view.setBackgroundDrawable(colorDrawable);

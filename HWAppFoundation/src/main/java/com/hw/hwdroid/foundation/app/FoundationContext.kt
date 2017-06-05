@@ -14,6 +14,9 @@ import common.android.foundation.app.HActivityStack
 
 object FoundationContext {
 
+    // TitleBar 默认使用IOS模式
+    @JvmStatic var useIosModeForTitleBar = false
+
     var context: Context? = null
 
     @JvmStatic fun inits(context: Context) {

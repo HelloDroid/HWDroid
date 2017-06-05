@@ -2,24 +2,29 @@
 <resources>
 
     <item name="content" type="id"/>
-    <item name="root_view" type="id"/>
-    <item name="list_view" type="id"/>
+    <item name="contentRoot" type="id"/>
+    <item name="contentLoading" type="id"/>
+    <item name="contentProgressView" type="id"/>
+    <item name="rootView" type="id"/>
+    <item name="listView" type="id"/>
+    <item name="coordinatorLayout" type="id"/>
 
 
     <item name="appBar" type="id"/>     <!-- android.support.design.widget.AppBarLayout -->
     <item name="toolbar" type="id"/>    <!-- android.support.v7.widget.Toolbar -->
     <item name="titleBar" type="id"/>   <!-- common.android.foundation.widget.TitleBarView -->
 
-    <item name="toolbar_content" type="id"/>
-    <item name="titleBar_title_tv" type="id"/>
-    <item name="titleBar_subTitle_tv" type="id"/>
-    <item name="titleBar_left" type="id"/>
-    <item name="titleBar_back" type="id"/>
-    <item name="titleBar_left_tv" type="id"/>
-    <item name="titleBar_right" type="id"/>
-    <item name="titleBar_btnImage" type="id"/>
-    <item name="titleBar_right_tv" type="id"/>
-    <item name="titleBar_center" type="id"/>
+    <item name="toolbarContent" type="id"/>
+    <item name="titleBarBackView" type="id"/>
+    <item name="titleBarBackBtn" type="id"/>
+    <item name="titleBarBackTv" type="id"/>
+    <item name="titleBarDivider" type="id"/>
+    <item name="titleBarTitleView" type="id"/>
+    <item name="titleBarTitleTv" type="id"/>
+    <item name="titleBarSubtitleTv" type="id"/>
+    <item name="titleBarMenuView" type="id"/>
+    <item name="titleBarMenuBtn" type="id"/>
+    <item name="titleBarMenuTv" type="id"/>
 
 
 </resources>

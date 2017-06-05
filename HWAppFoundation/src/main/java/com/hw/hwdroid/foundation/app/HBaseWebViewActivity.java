@@ -43,7 +43,7 @@ public class HBaseWebViewActivity<ViewModelData extends ViewModelActivity> exten
         super.onCreate(savedInstanceState);
 
         url = getIntent().getStringExtra(EXTRA_URL);
-        // getTitleBarView().getLeftLayout().setVisibility(View.INVISIBLE);
+        // getTitleBarView().getTitleBarBackView().setVisibility(View.INVISIBLE);
         setTitle(StringUtils.changeNull(getIntent().getStringExtra(EXTRA_TITLE)));
 
         mWebView.setWebViewClient(myWebViewClient);

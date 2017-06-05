@@ -233,6 +233,15 @@ public final class ResourceUtils {
         return getStringByKey(context, R.string.class, name, defaultValue);
     }
 
+    public static String getString(@NonNull Context context, @StringRes int resId, String defaultValue) {
+        try {
+            return context.getString(resId);
+        } catch (Exception e) {
+        }
+
+        return defaultValue;
+    }
+
     /**
      * 获取字符对象
      *

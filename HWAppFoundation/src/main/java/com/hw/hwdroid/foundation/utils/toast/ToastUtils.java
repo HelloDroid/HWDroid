@@ -250,7 +250,7 @@ public class ToastUtils {
      * @param yOffset
      * @param duration
      */
-    public static void show(@NonNull Context context, @NonNull String msg, int gravity, int xOffset, int yOffset, int duration) {
+    public static void show(@NonNull Context context, @NonNull CharSequence msg, int gravity, int xOffset, int yOffset, int duration) {
         show(context, msg, gravity, xOffset, yOffset, duration, null);
     }
 
@@ -271,7 +271,7 @@ public class ToastUtils {
      * @param action   延迟执行的动作
      */
     public static void show(@NonNull Context context,
-                            @NonNull String msg, int gravity, int xOffset, int yOffset, @Duration int duration, Consumer<Integer> action) {
+                            @NonNull CharSequence msg, int gravity, int xOffset, int yOffset, @Duration int duration, Consumer<Integer> action) {
         if (null == context || StringUtils.isNullOrWhiteSpace(msg)) {
             return;
         }

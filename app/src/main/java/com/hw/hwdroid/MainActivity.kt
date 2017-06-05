@@ -44,4 +44,13 @@ class MainActivity : HBaseActivity<ViewModelActivity>() {
 
         return super.onOptionsItemSelected(item)
     }
+
+    override fun loadCompleted() {
+        super.loadCompleted()
+    }
+
+    override fun initPrepare() {
+        super.initPrepare()
+    }
+
 }

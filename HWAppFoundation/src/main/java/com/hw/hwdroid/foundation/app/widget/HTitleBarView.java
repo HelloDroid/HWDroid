@@ -4,26 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.hw.hwdroid.foundation.R;
+import com.hw.hwdroid.foundation.app.FoundationContext;
 import com.hw.hwdroid.foundation.utils.ScreenUtils;
 import com.hw.hwdroid.foundation.utils.StringUtils;
 import com.hw.hwdroid.foundation.utils.UnitConverterUtils;
 import com.hw.hwdroid.foundation.utils.widget.ViewUtils;
 import com.orhanobut.logger.Logger;
+
+import common.android.foundation.app.HActivityStack;
 
 
 /**
@@ -32,58 +36,67 @@ import com.orhanobut.logger.Logger;
  * Created by ChenJ on 2017/2/16.
  */
 
-public class HTitleBarView extends LinearLayout {
+public class HTitleBarView extends LinearLayoutCompat {
+
 
     private final int MAX_WIDTH_DP = 100;
 
-    private TextView titleTv;
-    private TextView subTitleTv;
+    private AppCompatTextView titleTv;
+    private AppCompatTextView subTitleTv;
 
-    private TextView leftTv;
-    private HBackButton backBtn;
+    private AppCompatImageView backBtn;
+    private AppCompatTextView backTv;
 
-    private TextView rightTv;
-    private AppCompatImageView btnImage;
+    private AppCompatTextView menuTv;
+    private AppCompatImageView menuBtn;
 
-    private RelativeLayout leftLayout;
-    private LinearLayout rightLayout;
-    private LinearLayout centerLayout;
-
-    private boolean showOnlyTitle;
-    private boolean showOnlyBack;
-    private boolean showBackAndHome;
-    private boolean showBackAndRightText;
-    private boolean showLeftAndRightText;
+    private View dividerView;
+    private LinearLayoutCompat titleBarBackView;
+    private LinearLayoutCompat titleBarMenuView;
+    private LinearLayoutCompat titleBarTitleView;
 
     private String initLeftText;
     private String initRightText;
     private final String titleFromAttribute;
 
+    public final boolean iosMode;
+
+    public final int MODE_BACK_TITLE = 0;
+    public final int MODE_BACK = 1;
+    public final int MODE_TITLE = 2;
+    public final int MODE_BACK_MENU = 3;
+    public final int MODE_BACK_MENUTEXT = 4;
+    public final int MODE_BACKTEXT_MENUTEXT = 5;
+
+    public int titleBarMode = MODE_BACK_TITLE;
+
     public HTitleBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LayoutInflater.from(context).inflate(R.layout.common_title_bar, this);
-
-        backBtn = (HBackButton) findViewById(R.id.titleBar_back);
-        leftTv = (TextView) findViewById(R.id.titleBar_left_tv);
-
-        btnImage = (AppCompatImageView) findViewById(R.id.titleBar_btnImage);
-        rightTv = (TextView) findViewById(R.id.titleBar_right_tv);
-
-        titleTv = (TextView) findViewById(R.id.titleBar_title_tv);
-        subTitleTv = (TextView) findViewById(R.id.titleBar_subTitle_tv);
-
-        leftLayout = (RelativeLayout) findViewById(R.id.titleBar_left);
-        centerLayout = (LinearLayout) findViewById(R.id.titleBar_center);
-        rightLayout = (LinearLayout) findViewById(R.id.titleBar_right);
-
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HTitleBarView);
+        iosMode = typedArray == null ? FoundationContext.getUseIosModeForTitleBar() : typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_ios, FoundationContext.getUseIosModeForTitleBar());
+        LayoutInflater.from(context).inflate(iosMode ? R.layout.common_title_bar_ios : R.layout.common_title_bar, this);
+
+        titleBarBackView = (LinearLayoutCompat) findViewById(R.id.titleBarBackView);
+        titleBarTitleView = (LinearLayoutCompat) findViewById(R.id.titleBarTitleView);
+        titleBarMenuView = (LinearLayoutCompat) findViewById(R.id.titleBarMenuView);
+
+        backBtn = (AppCompatImageView) findViewById(R.id.titleBarBackBtn);
+        backTv = (AppCompatTextView) findViewById(R.id.titleBarBackTv);
+        dividerView = findViewById(R.id.titleBarDivider);
+
+        titleTv = (AppCompatTextView) findViewById(R.id.titleBarTitleTv);
+        subTitleTv = (AppCompatTextView) findViewById(R.id.titleBarSubtitleTv);
+
+        menuBtn = (AppCompatImageView) findViewById(R.id.titleBarMenuBtn);
+        menuTv = (AppCompatTextView) findViewById(R.id.titleBarMenuTv);
+
+        if (iosMode && dividerView != null) {
+            dividerView.setVisibility(View.GONE);
+        }
+
         if (null != typedArray) {
-            showOnlyTitle = typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_onlytitle, false);
-            showOnlyBack = typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_onlyback, false);
-            showBackAndHome = typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_back_home, false);
-            showBackAndRightText = typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_back_righttext, false);
-            showLeftAndRightText = typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_left_righttext, false);
+            titleBarMode = typedArray.getInt(R.styleable.HTitleBarView_htitlebar_mode, MODE_BACK_TITLE);
 
             if (typedArray.hasValue(R.styleable.HTitleBarView_htitlebar_title_text)) {
                 String title = typedArray.getString(R.styleable.HTitleBarView_htitlebar_title_text);
@@ -102,21 +115,32 @@ public class HTitleBarView extends LinearLayout {
                 }
             }
 
-            if (typedArray.hasValue(R.styleable.HTitleBarView_htitlebar_left_text)) {
-                initLeftText = typedArray.getString(R.styleable.HTitleBarView_htitlebar_left_text);
+            if (typedArray.hasValue(R.styleable.HTitleBarView_htitlebar_backtext_text)) {
+                initLeftText = typedArray.getString(R.styleable.HTitleBarView_htitlebar_backtext_text);
             }
 
-            if (typedArray.hasValue(R.styleable.HTitleBarView_htitlebar_right_text)) {
-                initRightText = typedArray.getString(R.styleable.HTitleBarView_htitlebar_right_text);
+            if (typedArray.hasValue(R.styleable.HTitleBarView_htitlebar_menutext_text)) {
+                initRightText = typedArray.getString(R.styleable.HTitleBarView_htitlebar_menutext_text);
             }
 
-            leftTv.setText(StringUtils.changeNull(initLeftText));
-            rightTv.setText(StringUtils.changeNull(initRightText));
+            backTv.setText(StringUtils.changeNull(initLeftText));
+            menuTv.setText(StringUtils.changeNull(initRightText));
 
             typedArray.recycle();
         } else {
             titleFromAttribute = "";
         }
+
+        titleBarBackView.setOnClickListener(v -> {
+            if (getContext() instanceof Activity) {
+                HActivityStack.INSTANCE.pop((Activity) getContext());
+            } else {
+                Activity activity = HActivityStack.INSTANCE.curr();
+                if (null != activity) {
+                    HActivityStack.INSTANCE.pop();
+                }
+            }
+        });
 
         setVisibility4Model();
         computeViewsWH(context);
@@ -134,82 +158,108 @@ public class HTitleBarView extends LinearLayout {
     /**
      * updateViews Style
      *
-     * @param isLight
+     * @param isLightTheme
      */
-    @SuppressWarnings("deprecation")
-    public void updateStyle(boolean isLight) {
-        if (isLight) {
-            backBtn.setImageResource(isLight);
-        }
-        subTitleTv.setTextColor(getContext().getResources().getColor(isLight ? R.color.gray_6e : R.color.gray_white_b8e1f4));
-        titleTv.setTextColor(getContext().getResources().getColor(isLight ? R.color.textColorPrimary : android.R.color.white));
-        ColorStateList csl = getContext().getResources().getColorStateList(isLight ? R.color.text_selector : R.color.text_white_selector);
-        leftTv.setTextColor(csl);
-        rightTv.setTextColor(csl);
-    }
+    public void updateStyle(boolean isLightTheme) {
+        if (iosMode) {
+            backBtn.setImageResource(isLightTheme ? R.drawable.icon_back_vector_dark : R.drawable.icon_back_vector);
+        } else {
+            ColorStateList colorStateList = ColorStateList.valueOf(Color.parseColor(isLightTheme ? "#333333" : "#ffffff"));
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                backBtn.setImageTintList(colorStateList);
+            } else {
+                ViewCompat.setBackgroundTintList(backBtn, colorStateList);
+                ViewCompat.setBackgroundTintMode(backBtn, PorterDuff.Mode.SRC_IN);
+            }
+        }
+
+        subTitleTv.setTextColor(getContext().getResources().getColor(isLightTheme ? R.color.gray_6e : R.color.gray_white_b8e1f4));
+        titleTv.setTextColor(getContext().getResources().getColor(isLightTheme ? R.color.textColorPrimary : android.R.color.white));
+        ColorStateList csl = getContext().getResources().getColorStateList(isLightTheme ? R.color.text_selector : R.color.text_white_selector);
+        backTv.setTextColor(csl);
+        menuTv.setTextColor(csl);
+    }
 
     private void setVisibility4Model() {
         // 只有Title
-        if (showOnlyTitle) {
-            leftLayout.removeAllViews();
-            rightLayout.removeAllViews();
+        if (titleBarMode == MODE_TITLE) {
+            titleBarBackView.removeAllViews();
+            titleBarMenuView.removeAllViews();
 
-            leftLayout.setVisibility(View.GONE);
-            rightLayout.setVisibility(View.GONE);
+            if (dividerView != null) {
+                dividerView.setVisibility(View.GONE);
+            }
+
+            titleBarBackView.setVisibility(View.GONE);
+            titleBarMenuView.setVisibility(View.GONE);
         }
         // 只有back
-        else if (showOnlyBack) {
-            leftLayout.removeView(leftTv);
+        else if (titleBarMode == MODE_BACK) {
+            titleBarBackView.removeView(backTv);
             backBtn.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
 
-            rightLayout.removeAllViews();
-            rightLayout.setVisibility(View.GONE);
+            titleBarMenuView.removeAllViews();
+            titleBarMenuView.setVisibility(View.GONE);
         }
-        // back + home
-        else if (showBackAndHome) {
-            leftLayout.removeView(leftTv);
+        // back + menu
+        else if (titleBarMode == MODE_BACK_MENU) {
+            titleBarBackView.removeView(backTv);
             backBtn.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
 
-            rightLayout.removeView(rightTv);
-            btnImage.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.VISIBLE);
+            if (dividerView != null) {
+                dividerView.setVisibility(View.GONE);
+            }
+
+            titleBarMenuView.removeView(menuTv);
+            menuBtn.setVisibility(View.VISIBLE);
+            titleBarMenuView.setVisibility(View.VISIBLE);
         }
-        // back + rightText
-        else if (showBackAndRightText) {
-            leftLayout.removeView(leftTv);
+        // back + menuText
+        else if (titleBarMode == MODE_BACK_MENUTEXT) {
+            titleBarBackView.removeView(backTv);
             backBtn.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
 
-            rightLayout.removeView(btnImage);
-            rightTv.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.VISIBLE);
+            if (dividerView != null) {
+                dividerView.setVisibility(View.GONE);
+            }
+
+            titleBarMenuView.removeView(menuBtn);
+            menuTv.setVisibility(View.VISIBLE);
+            titleBarMenuView.setVisibility(View.VISIBLE);
         }
-        // cancel + rightText
-        else if (showLeftAndRightText) {
-            leftLayout.removeView(backBtn);
-            leftTv.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+        // cancel + menuText
+        else if (titleBarMode == MODE_BACKTEXT_MENUTEXT) {
+            titleBarBackView.removeView(backBtn);
+            backTv.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
 
-            rightLayout.removeView(btnImage);
-            rightTv.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.VISIBLE);
-        } else {
-            // rightLayout.removeAllViews();
-            rightLayout.setVisibility(View.GONE);
+            titleBarMenuView.removeView(menuBtn);
+            menuTv.setVisibility(View.VISIBLE);
+            titleBarMenuView.setVisibility(View.VISIBLE);
+        }
+        // MODE_BACK_TITLE
+        else {
+            titleBarBackView.removeView(backTv);
+            backBtn.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
+
+            titleBarMenuView.removeAllViews();
+            titleBarMenuView.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(leftTv.getText())) {
+        if (!TextUtils.isEmpty(backTv.getText())) {
             backBtn.setVisibility(View.GONE);
-            leftTv.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+            backTv.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
         }
 
-        if (!TextUtils.isEmpty(rightTv.getText())) {
-            rightTv.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(menuTv.getText())) {
+            menuTv.setVisibility(View.VISIBLE);
+            titleBarMenuView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -219,13 +269,8 @@ public class HTitleBarView extends LinearLayout {
      * @param context
      */
     public void computeViewsWH(Context context) {
-        // back + text
-        if (backBtn.getVisibility() == View.VISIBLE && leftTv.getVisibility() == View.VISIBLE) {
-            backBtn.setPadding(UnitConverterUtils.getPixelFromDip(context, 6), 0, 0, 0);
-        }
-        // only text
-        if (backBtn.getVisibility() == View.GONE && leftTv.getVisibility() == View.VISIBLE) {
-            backBtn.setPadding(UnitConverterUtils.getPixelFromDip(context, 10), 0, UnitConverterUtils.getPixelFromDip(context, 10), 0);
+        if (iosMode) {
+            return;
         }
 
         int sw = ScreenUtils.getScreenWH(context)[0] / 4;
@@ -234,8 +279,8 @@ public class HTitleBarView extends LinearLayout {
             maxW = sw;
         }
 
-        int[] leftLayoutWH = ViewUtils.getViewMeasure(leftLayout);
-        int[] rightLayoutWH = ViewUtils.getViewMeasure(rightLayout);
+        int[] leftLayoutWH = ViewUtils.getViewMeasure(titleBarBackView);
+        int[] rightLayoutWH = ViewUtils.getViewMeasure(titleBarMenuView);
 
         int centerPaddingL = leftLayoutWH[0];
         int centerPaddingR = rightLayoutWH[0];
@@ -243,12 +288,12 @@ public class HTitleBarView extends LinearLayout {
         int w = leftLayoutWH[0] > rightLayoutWH[0] ? leftLayoutWH[0] : rightLayoutWH[0];
 
         if (w > maxW) {
-            leftLayout.getLayoutParams().width = maxW;
-            leftLayout.requestLayout();
+            titleBarBackView.getLayoutParams().width = maxW;
+            titleBarBackView.requestLayout();
             centerPaddingL = maxW;
 
-            rightLayout.getLayoutParams().width = maxW;
-            rightLayout.requestLayout();
+            titleBarMenuView.getLayoutParams().width = maxW;
+            titleBarMenuView.requestLayout();
             centerPaddingR = maxW;
 
         }
@@ -256,39 +301,39 @@ public class HTitleBarView extends LinearLayout {
         centerPaddingL += UnitConverterUtils.getPixelFromDip(context, 5);
         centerPaddingR += UnitConverterUtils.getPixelFromDip(context, 5);
 
-        centerLayout.setPadding(centerPaddingL, 0, centerPaddingR, 0);
+        titleBarTitleView.setPadding(centerPaddingL, 0, centerPaddingR, 0);
     }
 
-    public TextView getTitleTextView() {
+    public AppCompatTextView getTitleTextView() {
         return titleTv;
     }
 
-    public TextView getRightTextView() {
-        return rightTv;
+    public AppCompatTextView getMenuTextView() {
+        return menuTv;
     }
 
-    public TextView getLeftTextView() {
-        return leftTv;
+    public AppCompatTextView getBackTextView() {
+        return backTv;
     }
 
-    public RelativeLayout getLeftLayout() {
-        return leftLayout;
+    public LinearLayoutCompat getTitleBarBackView() {
+        return titleBarBackView;
     }
 
-    public LinearLayout getCenterLayout() {
-        return centerLayout;
+    public LinearLayoutCompat getTitleBarTitleView() {
+        return titleBarTitleView;
     }
 
-    public LinearLayout getRightLayout() {
-        return rightLayout;
+    public LinearLayoutCompat getTitleBarMenuView() {
+        return titleBarMenuView;
     }
 
-    public HBackButton getBackButton() {
+    public AppCompatImageView getBackButton() {
         return backBtn;
     }
 
-    public AppCompatImageView getButtonImage() {
-        return btnImage;
+    public AppCompatImageView getMenuButton() {
+        return menuBtn;
     }
 
     public void setBackButtonVisibility(boolean visibility) {
@@ -303,78 +348,74 @@ public class HTitleBarView extends LinearLayout {
      * 设置只显示Title
      */
     public void setShowOnlyTitle() {
-        leftLayout.removeAllViews();
-        rightLayout.removeAllViews();
+        titleBarBackView.removeAllViews();
+        titleBarMenuView.removeAllViews();
 
-        leftLayout.setVisibility(View.GONE);
-        rightLayout.setVisibility(View.GONE);
-        centerLayout.setVisibility(View.VISIBLE);
+        titleBarBackView.setVisibility(View.GONE);
+        titleBarMenuView.setVisibility(View.GONE);
+        titleBarTitleView.setVisibility(View.VISIBLE);
     }
 
     /**
      * Done-Cancel模式
-     *
-     * @param activity
      */
-    public void setCancelDoneModel(@NonNull Activity activity) {
-        setCancelDoneModel(activity, R.string.save);
+    public void setCancelDoneModel() {
+        setCancelDoneModel(R.string.save);
     }
 
     /**
      * Done-Cancel模式
      *
-     * @param activity
      * @param doneRes
      */
-    public void setCancelDoneModel(@NonNull Activity activity, @StringRes int doneRes) {
-        setCancelDoneModel(activity, R.string.cancel, doneRes);
+    public void setCancelDoneModel(@StringRes int doneRes) {
+        setCancelDoneModel(R.string.cancel, doneRes);
     }
 
     /**
      * Done-Cancel模式
      *
-     * @param activity
      * @param cancelRes
      * @param doneRes
      */
-    public void setCancelDoneModel(@NonNull Activity activity, @StringRes int cancelRes, @StringRes int doneRes) {
-        setCancelDoneModel(activity, getContext().getString(cancelRes), getContext().getString(doneRes));
+    public void setCancelDoneModel(@StringRes int cancelRes, @StringRes int doneRes) {
+        setCancelDoneModel(getContext().getString(cancelRes), getContext().getString(doneRes));
     }
 
     /**
      * Done-Cancel模式
      *
-     * @param activity
      * @param cancel
      * @param done
      */
-    public void setCancelDoneModel(@NonNull Activity activity, String cancel, String done) {
-        btnImage.setVisibility(View.GONE);
-        setBackButtonVisibility(false);
-        setLeftText(cancel);
-        setRightText(done);
+    public void setCancelDoneModel(String cancel, String done) {
+        menuBtn.setVisibility(View.GONE);
+        ViewUtils.removeView(titleBarMenuView, menuBtn);
 
-        getLeftLayout().setOnClickListener(v -> activity.finish());
+        setBackButtonVisibility(false);
+
+        setBackText(cancel);
+        setMenuText(done);
     }
 
-    public void setLeftText(CharSequence text) {
+    public void setBackText(CharSequence text) {
         if (TextUtils.isEmpty(text)) {
-            leftTv.setVisibility(View.GONE);
+            backTv.setVisibility(View.GONE);
 
-            if (leftLayout.getVisibility() != View.VISIBLE) {
+            if (titleBarBackView.getVisibility() != View.VISIBLE) {
                 return;
             }
 
-            int childCount = leftLayout.getChildCount();
+            final int childCount = titleBarBackView.getChildCount();
             if (childCount <= 0) {
-                leftLayout.setVisibility(View.GONE);
+                titleBarBackView.setVisibility(View.GONE);
                 return;
             }
 
             boolean needShow = false;
             for (int index = 0; index < childCount; index++) {
-                View child = leftLayout.getChildAt(index);
-                if (null == child) {
+                View child = titleBarBackView.getChildAt(index);
+                if (child == null) {
                     continue;
                 }
 
@@ -384,16 +425,13 @@ public class HTitleBarView extends LinearLayout {
                 }
             }
 
-            leftLayout.setVisibility(needShow ? View.VISIBLE : View.GONE);
-
+            titleBarBackView.setVisibility(needShow ? View.VISIBLE : View.GONE);
         } else {
-            if (!containView(leftLayout, leftTv)) {
-                leftLayout.addView(leftTv);
-            }
+            ViewUtils.addView(titleBarBackView, backTv, true);
 
-            leftTv.setText(text);
-            leftTv.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.VISIBLE);
+            backTv.setText(text);
+            backTv.setVisibility(View.VISIBLE);
+            titleBarBackView.setVisibility(View.VISIBLE);
         }
 
         computeViewsWH(getContext());
@@ -404,10 +442,9 @@ public class HTitleBarView extends LinearLayout {
      *
      * @param textResId
      */
-    public void setRightText(@StringRes int textResId) {
+    public void setMenuText(@StringRes int textResId) {
         try {
-            String text = getContext().getString(textResId);
-            setRightText(text);
+            setMenuText(StringUtils.changeNull(getContext().getString(textResId)));
         } catch (Exception e) {
             Logger.e(e);
         }
@@ -418,22 +455,22 @@ public class HTitleBarView extends LinearLayout {
      *
      * @param text
      */
-    public void setRightText(CharSequence text) {
+    public void setMenuText(CharSequence text) {
         if (TextUtils.isEmpty(text)) {
-            rightTv.setVisibility(View.GONE);
+            menuTv.setVisibility(View.GONE);
 
-            if (rightLayout.getVisibility() != View.VISIBLE) {
+            if (titleBarMenuView.getVisibility() != View.VISIBLE) {
                 return;
             }
 
-            int childCount = rightLayout.getChildCount();
+            int childCount = titleBarMenuView.getChildCount();
             if (childCount <= 0) {
                 return;
             }
 
             boolean needShow = false;
             for (int index = 0; index < childCount; index++) {
-                View child = rightLayout.getChildAt(index);
+                View child = titleBarMenuView.getChildAt(index);
                 if (null == child) {
                     continue;
                 }
@@ -444,54 +481,52 @@ public class HTitleBarView extends LinearLayout {
                 }
             }
 
-            rightLayout.setVisibility(needShow ? View.VISIBLE : View.GONE);
+            titleBarMenuView.setVisibility(needShow ? View.VISIBLE : View.GONE);
         } else {
-            if (!containView(rightLayout, rightTv)) {
-                rightLayout.addView(rightTv);
-            }
+            ViewUtils.addView(titleBarMenuView, menuTv, true);
 
-            rightTv.setText(text);
-            rightTv.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.VISIBLE);
+            menuTv.setText(text);
+            menuTv.setVisibility(View.VISIBLE);
+            titleBarMenuView.setVisibility(View.VISIBLE);
         }
 
         computeViewsWH(getContext());
     }
 
-    public void setRightImage(Drawable drawable, boolean cleanOtherViews) {
-        if (null == btnImage) {
+    public void setMenuImage(Drawable drawable, boolean cleanOtherViews) {
+        if (menuBtn == null) {
             return;
         }
 
         if (cleanOtherViews) {
-            rightLayout.removeAllViews();
-            rightLayout.addView(btnImage);
-        } else if (!containView(rightLayout, btnImage)) {
-            rightLayout.addView(btnImage);
+            titleBarMenuView.removeAllViews();
+            titleBarMenuView.addView(menuBtn);
+        } else if (!ViewUtils.containView(titleBarMenuView, menuBtn)) {
+            titleBarMenuView.addView(menuBtn);
         }
 
-        btnImage.setImageDrawable(drawable);
-        btnImage.setVisibility(View.VISIBLE);
-        rightLayout.setVisibility(View.VISIBLE);
+        menuBtn.setImageDrawable(drawable);
+        menuBtn.setVisibility(View.VISIBLE);
+        titleBarMenuView.setVisibility(View.VISIBLE);
 
         computeViewsWH(getContext());
     }
 
-    public void setRightImage(@DrawableRes int resId, boolean cleanOtherViews) {
-        if (null == btnImage) {
+    public void setMenuImage(@DrawableRes int resId, boolean cleanOtherViews) {
+        if (null == menuBtn) {
             return;
         }
 
         if (cleanOtherViews) {
-            rightLayout.removeAllViews();
-            rightLayout.addView(btnImage);
-        } else if (!containView(rightLayout, btnImage)) {
-            rightLayout.addView(btnImage);
+            titleBarMenuView.removeAllViews();
+            titleBarMenuView.addView(menuBtn);
+        } else if (!ViewUtils.containView(titleBarMenuView, menuBtn)) {
+            titleBarMenuView.addView(menuBtn);
         }
 
-        btnImage.setImageResource(resId);
-        btnImage.setVisibility(View.VISIBLE);
-        rightLayout.setVisibility(View.VISIBLE);
+        menuBtn.setImageResource(resId);
+        menuBtn.setVisibility(View.VISIBLE);
+        titleBarMenuView.setVisibility(View.VISIBLE);
 
         computeViewsWH(getContext());
     }
@@ -513,14 +548,6 @@ public class HTitleBarView extends LinearLayout {
     public void setSubTitleTv(CharSequence text) {
         subTitleTv.setText(text);
         subTitleTv.setVisibility(!StringUtils.isEmptyOrNull(text) ? View.VISIBLE : View.GONE);
-    }
-
-    public boolean containView(ViewGroup viewGroup, View view) {
-        if (null == viewGroup || null == view) {
-            return false;
-        }
-
-        return viewGroup.indexOfChild(view) != -1;
     }
 
 }

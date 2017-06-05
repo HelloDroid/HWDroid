@@ -10,47 +10,12 @@
     android:padding="0dp"
     >
 
-    <android.support.v7.widget.LinearLayoutCompat
-        android:id="@id/titleBarBackView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
-        android:minWidth="50dp"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        >
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@id/titleBarBackBtn"
-            style="@style/TitleBar.Button.Back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:tint="#fff"
-            android:visibility="visible"
-            app:srcCompat="@drawable/abc_ic_ab_back_mtrl_am_alpha"
-            />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@id/titleBarBackTv"
-            style="@style/TitleBar.Button.Positive"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:text="@string/cancel"
-            android:visibility="gone"
-            tools:text="@string/cancel"
-            />
-    </android.support.v7.widget.LinearLayoutCompat>
-
     <View
         android:id="@id/titleBarDivider"
         style="@style/TitleBar.Divider"
         android:layout_width="1px"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/titleBarBackView"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -58,9 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_toLeftOf="@id/titleBarMenuView"
-        android:layout_toRightOf="@id/titleBarDivider"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:minWidth="100dp"
         android:orientation="vertical"
         android:paddingLeft="5dp"
@@ -85,6 +48,40 @@
             />
     </android.support.v7.widget.LinearLayoutCompat>
 
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@id/titleBarBackView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:minWidth="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@id/titleBarBackBtn"
+            style="@style/TitleBar.Button.Back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:tint="#fff"
+            android:visibility="visible"
+            app:srcCompat="@drawable/icon_back_vector"
+            tools:ignore="VectorDrawableCompat"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@id/titleBarBackTv"
+            style="@style/TitleBar.Button.Positive"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:text="@string/cancel"
+            android:visibility="gone"
+            tools:text="@string/cancel"
+            />
+    </android.support.v7.widget.LinearLayoutCompat>
 
     <android.support.v7.widget.LinearLayoutCompat
         android:id="@id/titleBarMenuView"
@@ -106,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:tint="#fff"
-            android:visibility="visible"
+            android:visibility="gone"
             app:srcCompat="@drawable/abc_ic_clear_mtrl_alpha"
             />
 
@@ -116,7 +113,7 @@
             style="@style/TitleBar.Button.Positive"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:text="@string/cancel"
             />
 
