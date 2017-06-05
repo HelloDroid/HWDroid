@@ -874,12 +874,12 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         return HWDialogManager.showDialogFragment(supportFragmentManager, builder.create(), callBack, fragment, this)
     }
 
-    fun toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-        ToastUtils.show(applicationContext, message, Gravity.CENTER, 0, 0, duration)
+    fun toast(message: CharSequence, dur: Int = Toast.LENGTH_SHORT) {
+        ToastUtils.show(applicationContext, message, dur = dur)
     }
 
-    fun toast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT) {
-        ToastUtils.show(applicationContext, ResourceUtils.getString(applicationContext, resId, ""), Gravity.CENTER, 0, 0, duration)
+    fun toast(@StringRes messageResId: Int, dur: Int = Toast.LENGTH_SHORT) {
+        ToastUtils.show(applicationContext, messageResId = messageResId, dur = dur)
     }
 
     /**
