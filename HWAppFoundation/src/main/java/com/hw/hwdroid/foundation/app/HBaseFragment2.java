@@ -44,10 +44,10 @@ import butterknife.Unbinder;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HBaseFragment#newInstance} factory method to
+ * Use the {@link HBaseFragment2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HBaseFragment<ViewModelData extends ViewModelFragment> extends Fragment implements HPermissionListener {
+public class HBaseFragment2<ViewModelData extends ViewModelFragment> extends Fragment implements HPermissionListener {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(ViewModel data);
     }
@@ -56,7 +56,7 @@ public class HBaseFragment<ViewModelData extends ViewModelFragment> extends Frag
     protected boolean isPrepared;
 
 
-    /** 是否可见状态 为了避免和{@link HBaseFragment#isVisible()}冲突 */
+    /** 是否可见状态 为了避免和{@link HBaseFragment2#isVisible()}冲突 */
     protected boolean isVisible;
 
     /** 是否第一次加载 */
@@ -68,19 +68,19 @@ public class HBaseFragment<ViewModelData extends ViewModelFragment> extends Frag
     /** 界面最后停留时间 毫秒 */
     public long takeAWalkLastTime;
 
-    /** model data */
+    /** model dataList */
     private ViewModelData mData;
 
     private Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
 
-    public static HBaseFragment newInstance(Bundle args) {
-        HBaseFragment fragment = new HBaseFragment();
+    public static HBaseFragment2 newInstance(Bundle args) {
+        HBaseFragment2 fragment = new HBaseFragment2();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public HBaseFragment() {
+    public HBaseFragment2() {
         super();
         // Required empty public constructor
     }

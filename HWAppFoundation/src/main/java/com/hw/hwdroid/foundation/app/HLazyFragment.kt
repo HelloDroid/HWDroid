@@ -22,7 +22,7 @@ abstract class HLazyFragment<ViewModelData : ViewModelFragment> : HBaseFragment<
      * @param hidden hidden True if the fragment is now hidden, false if it is not visible.
      */
     override fun onHiddenChanged(hidden: Boolean) {
-        if (isVisible == !hidden) {
+        if (isShowing == !hidden) {
             return
         }
 
@@ -43,15 +43,15 @@ abstract class HLazyFragment<ViewModelData : ViewModelFragment> : HBaseFragment<
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         // Logger.d("setUserVisibleHint=%b", isVisibleToUser);
-        if (isVisible == userVisibleHint) {
+        if (isShowing == userVisibleHint) {
             return
         }
 
         super.setUserVisibleHint(isVisibleToUser)
 
-        isVisible = userVisibleHint
+        isShowing = userVisibleHint
 
-        if (isVisible) {
+        if (isShowing) {
             onVisible()
         } else {
             onInvisible()
@@ -59,9 +59,9 @@ abstract class HLazyFragment<ViewModelData : ViewModelFragment> : HBaseFragment<
     }
 
     protected fun onVisible() {
-        isVisible = true
+        isShowing = true
 
-        if (!isPrepared()) {
+        if (!isPrepared) {
             return
         }
 
@@ -72,7 +72,7 @@ abstract class HLazyFragment<ViewModelData : ViewModelFragment> : HBaseFragment<
     protected abstract fun lazyLoad()
 
     protected fun onInvisible() {
-        isVisible = false
+        isShowing = false
     }
 
 }

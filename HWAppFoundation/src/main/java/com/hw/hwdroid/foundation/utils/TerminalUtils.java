@@ -808,10 +808,10 @@ public class TerminalUtils {
     }
 
     /**
-     * App data files
+     * App dataList files
      *
      * @param context
-     * @return data/data/application package/files
+     * @return dataList/dataList/application package/files
      */
     public static String getAppFilesDir(@NonNull Context context) {
         return context.getFilesDir().getAbsolutePath() + File.separator;
@@ -821,7 +821,7 @@ public class TerminalUtils {
      * 保存List数据
      *
      * @param context
-     * @param fileName /data/data/<package name>/files/fileName
+     * @param fileName /dataList/dataList/<package name>/files/fileName
      * @param obj
      */
     public static void writeObject2File(Context context, String fileName, Object obj) {
@@ -849,7 +849,7 @@ public class TerminalUtils {
     /**
      * 读取存有List的File，并转换为一个List
      *
-     * @param fileName /data/data/<package name>/files/fileName
+     * @param fileName /dataList/dataList/<package name>/files/fileName
      * @param context
      * @return
      */

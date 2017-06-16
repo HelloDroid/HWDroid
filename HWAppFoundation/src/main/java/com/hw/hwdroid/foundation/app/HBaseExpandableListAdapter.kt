@@ -72,7 +72,7 @@ abstract class HBaseExpandableListAdapter<Group : HExGroup<Child>, Child, GHolde
     }
 
     /**
-     * add data
+     * add dataList
      * @param groupList
      * @param notifyDataSetChanged 更新ListView
      */
@@ -128,7 +128,7 @@ abstract class HBaseExpandableListAdapter<Group : HExGroup<Child>, Child, GHolde
     }
 
     /**
-     * clear data
+     * clear dataList
      * @param notifyDataSetChanged 更新ListView
      */
     @JvmOverloads fun clear(notifyDataSetChanged: Boolean = false) {
@@ -153,7 +153,7 @@ abstract class HBaseExpandableListAdapter<Group : HExGroup<Child>, Child, GHolde
         }
 
     /**
-     * set child data
+     * set child dataList
      * @param groupPosition
      * @param children
      * @param notifyDataSetChanged 更新ListView
@@ -169,7 +169,7 @@ abstract class HBaseExpandableListAdapter<Group : HExGroup<Child>, Child, GHolde
     }
 
     /**
-     * add child data
+     * add child dataList
      * @param groupPosition
      * @param children
      * @param notifyDataSetChanged 更新ListView
@@ -189,7 +189,7 @@ abstract class HBaseExpandableListAdapter<Group : HExGroup<Child>, Child, GHolde
     }
 
     /**
-     * add child item data
+     * add child item dataList
      * @param groupPosition
      * @param child
      * @param notifyDataSetChanged 更新ListView

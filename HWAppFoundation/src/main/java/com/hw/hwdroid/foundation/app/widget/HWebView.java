@@ -61,7 +61,7 @@ public class HWebView extends WebView {
         // Enable HTML5 local storage and make it persistent
         // webSettings.setDomStorageEnabled(true);
         // webSettings.setDatabaseEnabled(true);
-        // webSettings.setDatabasePath("/data/data/" +
+        // webSettings.setDatabasePath("/dataList/dataList/" +
         // WebViewActivity.this.getPackageName() + "/databases/");
 
         //webSettings.setSupportZoom(true);
@@ -77,7 +77,7 @@ public class HWebView extends WebView {
         webSettings.setDisplayZoomControls(false);
 
 
-        // Clear spurious cache data
+        // Clear spurious cache dataList
         clearHistory();
         clearFormData();
         // clearCache(true);

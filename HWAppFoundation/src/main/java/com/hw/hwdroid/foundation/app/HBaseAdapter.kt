@@ -141,7 +141,7 @@ abstract class HBaseAdapter<Bean, Holder : HBaseViewHolder>(_Context: Context) :
     }
 
     /**
-     * clear data
+     * clear dataList
      *
      * @param notifyDataSetChanged 更新ListView
      */

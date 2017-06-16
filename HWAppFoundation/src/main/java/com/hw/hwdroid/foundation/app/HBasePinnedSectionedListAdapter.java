@@ -21,17 +21,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 /**
  * Created by ChenJ on 16/8/26.
  */
-public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<Bean>, Bean, SectionHeaderHolderView extends
-        HBaseViewHolder, HolderView extends HBaseViewHolder> extends PinnedSectionedListAdapter {
+public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<Bean>, Bean, SectionHeaderHolderView extends HBaseViewHolder, HolderView extends HBaseViewHolder> extends PinnedSectionedListAdapter {
 
-    protected LayoutInflater mLayoutInflater;
-    private Context mContext;
+    protected LayoutInflater layoutInflater;
+    private Context context;
 
-    protected List<Section> mDataList = new ArrayList<>();
+    protected List<Section> dataList = new ArrayList<>();
 
     public HBasePinnedSectionedListAdapter(Context context) {
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     /**
@@ -40,7 +39,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
      * @return
      */
     public Context getContext() {
-        return mContext;
+        return context;
     }
 
     /**
@@ -49,11 +48,11 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
      * @return
      */
     public List<Section> getData() {
-        if (null == mDataList) {
-            mDataList = new ArrayList<>();
+        if (null == dataList) {
+            dataList = new ArrayList<>();
         }
 
-        return mDataList;
+        return dataList;
     }
 
     /**
@@ -86,7 +85,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
         }
 
         if (useAtomicData) {
-            mDataList = sectionData;
+            dataList = sectionData;
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
@@ -124,7 +123,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add data
+     * add dataList
      *
      * @param list
      */
@@ -133,7 +132,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add data
+     * add dataList
      *
      * @param list
      * @param notifyDataSetChanged 更新UI
@@ -143,11 +142,11 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             return;
         }
 
-        if (mDataList == null) {
-            mDataList = new ArrayList<>();
+        if (dataList == null) {
+            dataList = new ArrayList<>();
         }
 
-        mDataList.addAll(list);
+        dataList.addAll(list);
 
         if (notifyDataSetChanged) {
             notifyDataSetChanged();
@@ -174,17 +173,17 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             return;
         }
 
-        if (mDataList == null) {
-            mDataList = new ArrayList<>();
-            mDataList.addAll(list);
+        if (dataList == null) {
+            dataList = new ArrayList<>();
+            dataList.addAll(list);
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
             return;
         }
 
-        if (mDataList.isEmpty()) {
-            mDataList.addAll(list);
+        if (dataList.isEmpty()) {
+            dataList.addAll(list);
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
@@ -197,13 +196,13 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
                 continue;
             }
 
-            int indexOf = mDataList.indexOf(section);
+            int indexOf = dataList.indexOf(section);
             if (indexOf != -1) {
                 if (null != section.getChildren()) {
-                    mDataList.get(indexOf).getChildren().addAll(section.getChildren());
+                    dataList.get(indexOf).getChildren().addAll(section.getChildren());
                 }
             } else {
-                mDataList.add(section);
+                dataList.add(section);
             }
         }
 
@@ -232,17 +231,17 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             return;
         }
 
-        if (mDataList == null) {
-            mDataList = new ArrayList<>();
-            mDataList.addAll(list);
+        if (dataList == null) {
+            dataList = new ArrayList<>();
+            dataList.addAll(list);
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
             return;
         }
 
-        if (mDataList.isEmpty()) {
-            mDataList.addAll(list);
+        if (dataList.isEmpty()) {
+            dataList.addAll(list);
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
@@ -250,10 +249,10 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
         }
 
         // 原列表最后一项
-        Section oldLastItem = mDataList.get(mDataList.size() - 1);
+        Section oldLastItem = dataList.get(dataList.size() - 1);
 
         if (null == oldLastItem) {
-            this.mDataList.addAll(list);
+            this.dataList.addAll(list);
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
@@ -270,7 +269,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
                 oldLastItem.getChildren().addAll(rLastItem.getChildren());
             }
             if (!list.isEmpty()) {
-                mDataList.addAll(list);
+                dataList.addAll(list);
             }
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
@@ -278,7 +277,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             return;
         }
 
-        mDataList.addAll(list);
+        dataList.addAll(list);
         if (notifyDataSetChanged) {
             notifyDataSetChanged();
         }
@@ -302,11 +301,11 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
      * @return
      */
     public boolean remove(Section section, boolean notifyDataSetChanged) {
-        if (mDataList == null || mDataList.isEmpty()) {
+        if (dataList == null || dataList.isEmpty()) {
             return false;
         }
 
-        if (!mDataList.remove(section)) {
+        if (!dataList.remove(section)) {
             return false;
         }
 
@@ -335,11 +334,11 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
      * @return
      */
     public boolean removeAll(Collection<Section> list, boolean notifyDataSetChanged) {
-        if (mDataList == null || mDataList.isEmpty()) {
+        if (dataList == null || dataList.isEmpty()) {
             return false;
         }
 
-        final boolean r = mDataList.removeAll(list);
+        final boolean r = dataList.removeAll(list);
         if (notifyDataSetChanged) {
             notifyDataSetChanged();
         }
@@ -348,24 +347,24 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * clear data
+     * clear dataList
      */
     public void clear() {
         clear(false);
     }
 
     /**
-     * clear data
+     * clear dataList
      *
      * @param notifyDataSetChanged 更新UI
      */
     public void clear(boolean notifyDataSetChanged) {
-        if (mDataList == null) {
+        if (dataList == null) {
             return;
         }
 
-        if (!mDataList.isEmpty()) {
-            mDataList.clear();
+        if (!dataList.isEmpty()) {
+            dataList.clear();
             if (notifyDataSetChanged) {
                 notifyDataSetChanged();
             }
@@ -378,13 +377,13 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
      * @return
      */
     public List<List<Bean>> getItemData() {
-        if (null == mDataList) {
+        if (null == dataList) {
             return new ArrayList<>();
         }
 
         List<List<Bean>> itemList = new ArrayList<>();
 
-        for (Section g : mDataList) {
+        for (Section g : dataList) {
             if (null == g) {
                 itemList.add(new ArrayList<>());
             } else {
@@ -396,7 +395,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * set item data
+     * set item dataList
      *
      * @param list
      */
@@ -405,7 +404,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * set item data
+     * set item dataList
      *
      * @param section
      * @param list
@@ -434,7 +433,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add item data
+     * add item dataList
      *
      * @param list
      */
@@ -443,7 +442,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add item data
+     * add item dataList
      *
      * @param sectionPosition
      * @param list
@@ -467,7 +466,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add item data
+     * add item dataList
      *
      * @param item
      */
@@ -476,7 +475,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
     }
 
     /**
-     * add item data
+     * add item dataList
      *
      * @param sectionPosition
      * @param item
@@ -633,7 +632,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             if (null == view || getClass().isAnnotationPresent(HContentViewResEx.class)) {
                 HContentViewResEx annotation = getClass().getAnnotation(HContentViewResEx.class);
                 if (annotation.groupResId() != View.NO_ID) {
-                    view = mLayoutInflater.inflate(annotation.groupResId(), null);
+                    view = layoutInflater.inflate(annotation.groupResId(), null);
                 }
             }
         } catch (Exception e) {
@@ -699,7 +698,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
             if (null == view || getClass().isAnnotationPresent(HContentViewResEx.class)) {
                 HContentViewResEx annotation = getClass().getAnnotation(HContentViewResEx.class);
                 if (annotation.childResId() != View.NO_ID) {
-                    view = mLayoutInflater.inflate(annotation.childResId(), null);
+                    view = layoutInflater.inflate(annotation.childResId(), null);
                 }
             }
         } catch (Exception e) {

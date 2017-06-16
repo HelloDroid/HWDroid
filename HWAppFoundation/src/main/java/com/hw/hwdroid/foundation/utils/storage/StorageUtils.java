@@ -27,7 +27,7 @@ public class StorageUtils {
      */
     public static void delFile(Context context, String fileName) {
         try {
-            File file = new File("/data/data/" + context.getPackageName() + "/shared_prefs", fileName);
+            File file = new File("/dataList/dataList/" + context.getPackageName() + "/shared_prefs", fileName);
             if (file.exists()) {
                 file.delete();
             }
