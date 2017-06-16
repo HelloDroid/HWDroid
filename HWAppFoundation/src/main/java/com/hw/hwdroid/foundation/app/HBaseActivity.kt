@@ -17,12 +17,9 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.TextView
-import android.widget.Toast
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.hw.hwdroid.dialog.*
-import com.hw.hwdroid.dialog.model.DialogType
-import com.hw.hwdroid.dialog.model.exchangeModel.DialogExchangeModel
 import com.hw.hwdroid.dialog.permission.HPermissionListener
 import com.hw.hwdroid.dialog.permission.HPermissionUtils
 import com.hw.hwdroid.dialog.permission.HPermissionsDispatcher
@@ -33,9 +30,7 @@ import com.hw.hwdroid.foundation.app.model.ViewModel
 import com.hw.hwdroid.foundation.app.model.ViewModelActivity
 import com.hw.hwdroid.foundation.app.rx.bus.HRxBus
 import com.hw.hwdroid.foundation.app.widget.HTitleBarView
-import com.hw.hwdroid.foundation.utils.GUIDUtils
 import com.hw.hwdroid.foundation.utils.ResourceUtils
-import com.hw.hwdroid.foundation.utils.toast.ToastUtils
 import com.orhanobut.logger.Logger
 import common.android.foundation.app.HActivityStack
 import java.util.*
@@ -45,10 +40,10 @@ import java.util.*
  * 所有activity父类
  * Created by ChenJ on 2017/2/16.
  */
-open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(), HPermissionListener, HBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack {
+open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(), HPermissionListener, HBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack, IBaseDialogFragment {
 
     /** 用于检测回退Fragment >= 0  */
-    protected var mFragmentBackStackEntryCount: Int = 0
+    protected var backStackEntryCount4Fragment: Int = 0
 
     /** 是否已经记录了用户操作记录  */
     private var isUserRecordSaved: Boolean = false
@@ -56,7 +51,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
     /** true: 使用了common_action_layout 或 common_action_layout_light */
     private var isUseParentView = false
 
-    private var mToolbar: Toolbar? = null
+    private var toolbar: Toolbar? = null
     private var unBinder: Unbinder? = null
     private var addedActionBar: Boolean = false
 
@@ -185,8 +180,8 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
             if (Build.VERSION.SDK_INT < 16) {
                 parentView?.fitsSystemWindows = true
             } else {
-                if (parentView != null && !parentView.fitsSystemWindows) {
-                    parentView.fitsSystemWindows = true
+                if (parentView?.fitsSystemWindows ?: false) {
+                    parentView?.fitsSystemWindows = true
                 }
             }
         }
@@ -223,7 +218,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
             return
         }
 
-        mToolbar = toolbar
+        this.toolbar = toolbar
         addedActionBar = true
         super.setSupportActionBar(toolbar)
     }
@@ -236,8 +231,6 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
 
         toolbar?.let {
             setSupportActionBar(toolbar)
-
-            Logger.d("setSupportActionBar")
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -327,6 +320,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
      *
      * @return
      */
+    @Suppress("UNCHECKED_CAST")
     var data: ViewModelData = ViewModelActivity() as ViewModelData
         get() = field
         set(value) {
@@ -344,11 +338,11 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
      * Toolbar
      */
     open fun getToolbar(): Toolbar? {
-        if (mToolbar == null) {
-            mToolbar = findViewById(R.id.toolbar) as Toolbar?
+        if (toolbar == null) {
+            toolbar = findViewById(R.id.toolbar) as Toolbar?
         }
 
-        return mToolbar
+        return toolbar
     }
 
     /**
@@ -488,11 +482,11 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
      * @return
      */
     open protected fun popBackStackImmediate(): Boolean {
-        if (mFragmentBackStackEntryCount < 0) {
+        if (backStackEntryCount4Fragment < 0) {
             return false
         }
 
-        if (supportFragmentManager.backStackEntryCount <= mFragmentBackStackEntryCount) {
+        if (supportFragmentManager.backStackEntryCount <= backStackEntryCount4Fragment) {
             // finishCurrentActivity();
             // return true;
             return false
@@ -805,86 +799,9 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         data.requestPermissionMap.remove(requestCode)
     }
 
-    /**
-     * 单按钮弹出框
-     *
-     * @param tag                   tag
-     * @param positive              按钮文案
-     * @param title                 标题
-     * @param content               提示文案
-     * @param cancelForBack         返回可点击
-     * @param cancelForClickSpace   空白可点击
-     * @return
-     */
-    fun showSingleDialog(tag: String = GUIDUtils.guid(), positive: CharSequence = String(), title: CharSequence = String(),
-                         content: CharSequence = String(), cancelForBack: Boolean = true, cancelForClickSpace: Boolean = false): BaseDialogFragment {
-        return showDialog(DialogType.SINGLE, tag, String(), positive, title, content, cancelForBack, cancelForClickSpace)
-    }
-
-    /**
-     * show Dialog
-     * 返回和空白可点击
-     * @param type              类型
-     * @param tag               tag
-     * @param negative          取消文案
-     * @param positive          确定文案
-     * @param title             标题
-     * @param content           提示文案
-     * @return
-     */
-    fun showDialogBackAble(type: DialogType, tag: String = GUIDUtils.guid(), negative: CharSequence = String(),
-                           positive: CharSequence = String(), title: CharSequence = String(), content: CharSequence = String()): BaseDialogFragment {
-        return showDialog(type, tag, negative, positive, title, content, true, true)
-    }
-
-    /**
-     * show Dialog
-     *
-     * @param fragment
-     * @param callBack
-     * @param type                      类型
-     * @param tag                       tag
-     * @param negative                  取消文案
-     * @param positive                  确定文案
-     * @param title                     标题
-     * @param content                   提示文案
-     * @param cancelForBack             返回可点击
-     * @param cancelForClickSpace       空白可点击
-     * @return
-     */
-    fun showDialog(type: DialogType, tag: String = GUIDUtils.guid(),
-                   negative: CharSequence = String(), positive: CharSequence, title: CharSequence = String(), content: CharSequence = String(),
-                   cancelForBack: Boolean = true, cancelForClickSpace: Boolean = false, fragment: Fragment? = null, callBack: DialogCallBackContainer? = null): BaseDialogFragment {
-        val builder = DialogExchangeModel.DialogExchangeModelBuilder(type, tag)
-
-        // 双按钮框
-        if (type == DialogType.EXCUTE) {
-            builder.setPositiveText(positive).setNegativeText(negative)
-        }
-        // 单按钮框
-        else if (type == DialogType.SINGLE) {
-            builder.setSingleText(negative)
-        }
-
-        // 文本消息
-        builder.setDialogContext(content)
-
-        // 标题，back可点击，空白可点击
-        builder.setDialogTitle(title).setBackable(cancelForBack).setSpaceable(cancelForClickSpace).setHasTitle(!StringUtils.isEmptyOrNull(title))
-        return HWDialogManager.showDialogFragment(supportFragmentManager, builder.create(), callBack, fragment, this)
-    }
-
-    fun toast(message: CharSequence, dur: Int = Toast.LENGTH_SHORT) {
-        ToastUtils.show(applicationContext, message, dur = dur)
-    }
-
-    fun toast(@StringRes messageResId: Int, dur: Int = Toast.LENGTH_SHORT) {
-        ToastUtils.show(applicationContext, messageResId = messageResId, dur = dur)
-    }
 
     /**
      * 确认点击回调(Dialog)
-     *
      * @param tag
      */
     override fun onPositiveBtnClick(tag: String) {
@@ -892,7 +809,6 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
 
     /**
      * 取消点击回调(Dialog)
-     *
      * @param tag
      */
     override fun onNegativeBtnClick(tag: String) {
@@ -900,10 +816,21 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
 
     /**
      * 单个按键点击回调(Dialog)
-     *
      * @param tag
      */
     override fun onSingleBtnClick(tag: String) {
+    }
+
+    override fun showDialogCallback(tag: String?) {
+        tag?.let {
+            data.dialogFragmentTags.add(tag)
+        }
+    }
+
+    override fun dismissDialogCallback(tag: String?) {
+        tag?.let {
+            data.dialogFragmentTags.remove(tag)
+        }
     }
 
 }

@@ -5,8 +5,8 @@ package com.hw.hwdroid.dialog;
  */
 public interface IBaseDialogFragment {
 
-    void showCallback(String tag);
+    void showDialogCallback(String tag);
 
-    void dismissCallback(String tag);
+    void dismissDialogCallback(String tag);
 
 }

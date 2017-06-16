@@ -151,7 +151,7 @@ public class BaseDialogFragment extends DialogFragment {
     @Override
     public void dismiss() {
         if (getActivity() != null && getActivity() instanceof IBaseDialogFragment) {
-            ((IBaseDialogFragment) getActivity()).dismissCallback(getTag());
+            ((IBaseDialogFragment) getActivity()).dismissDialogCallback(getTag());
         }
 
         super.dismissAllowingStateLoss();
@@ -212,7 +212,7 @@ public class BaseDialogFragment extends DialogFragment {
     public void dismissSelf() {
         if (getActivity() != null && getActivity() instanceof IBaseDialogFragment) {
             // ((CoBaseActivity) get()).dialogFragmentTags.remove(getTag());
-            ((IBaseDialogFragment) getActivity()).dismissCallback(getTag());
+            ((IBaseDialogFragment) getActivity()).dismissDialogCallback(getTag());
         }
 
         HFragmentExchangeController.removeFragment(getFragmentManager(), this);

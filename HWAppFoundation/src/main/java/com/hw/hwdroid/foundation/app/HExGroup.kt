@@ -5,6 +5,6 @@ package com.hw.hwdroid.foundation.app
  */
 interface HExGroup<Child> {
 
-    val children: List<Child>
+    var children: MutableList<Child>
 
 }

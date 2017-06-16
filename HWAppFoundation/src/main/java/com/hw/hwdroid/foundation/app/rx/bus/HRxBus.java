@@ -26,7 +26,6 @@ import io.reactivex.subjects.Subject;
  * <p>
  * Created by nJ on 2017/2/17.
  */
-
 public class HRxBus {
     // TAG默认值
     public static final int TAG_DEFAULT = -1000;

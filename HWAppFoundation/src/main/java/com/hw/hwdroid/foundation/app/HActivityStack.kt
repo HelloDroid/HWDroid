@@ -69,7 +69,7 @@ object HActivityStack {
      * 移除堆栈中的Activity
      *
      * @param activity
-     * @param finish   Activity finish
+     * @param finish        Activity finish
      */
     @JvmOverloads fun pop(activity: Activity?, finish: Boolean = true) {
         synchronized(stack) {
@@ -127,13 +127,13 @@ object HActivityStack {
             activitys?.let {
                 if (activitys.isEmpty()) return
 
-                Stream.of(activitys).filter { a -> null != a }.forEach { a -> pop(a, true) }
+                Stream.of(activitys).filter { a -> a != null }.forEach { a -> pop(a, true) }
             }
         }
     }
 
     /**
-     * 移除堆栈中指定位置的Activit
+     * 移除堆栈中指定位置的Activity
      *
      * @param index
      */
@@ -154,9 +154,7 @@ object HActivityStack {
 
     /**
      * 返回指定位置的Activity
-
      * @param index
-     * *
      * @return
      */
     operator fun get(index: Int): Activity? {
@@ -174,29 +172,27 @@ object HActivityStack {
     }
 
     /**
-     * 返回Calss对应的Activit对象
+     * 返回Class对应的Activity对象
      *
      * @param cls
-     * *
      * @return
      */
     operator fun get(cls: Class<*>): Activity? {
         synchronized(stack) {
-            val optional = Stream.of(stack).filter { a -> null != a && a.javaClass == cls }.findFirst()
+            val optional = Stream.of(stack).filter { a -> a != null && a.javaClass == cls }.findFirst()
             return if (null != optional && optional.isPresent) optional.get() else null
         }
     }
 
     /**
-     * 返回Calss对应的Activity的所有对象
+     * 返回Class对应的Activity的所有对象
      *
      * @param cls
-     * *
      * @return
      */
     fun getList(cls: Class<*>): List<Activity> {
         synchronized(stack) {
-            return Stream.of(stack).filter { a -> null != a && a.javaClass == cls }.toList()
+            return Stream.of(stack).filter { a -> a != null && a.javaClass == cls }.toList()
         }
     }
 
@@ -213,8 +209,7 @@ object HActivityStack {
     }
 
     /**
-     * 当前Activit索引位置
-
+     * 当前Activity索引位置
      * @return
      */
     fun currIndex(): Int {
@@ -230,10 +225,9 @@ object HActivityStack {
     }
 
     /**
-     * Calss对应第一个Activity对象的位置索引
+     * Class对应第一个Activity对象的位置索引
      *
      * @param cls
-     * *
      * @return
      */
     fun index(cls: Class<*>): Int {
@@ -250,7 +244,6 @@ object HActivityStack {
 
     /**
      * 移除Activity至某一个Activity为止
-
      * @param cls first-activity
      */
     fun popAllExceptOne(cls: Class<*>) {
@@ -312,22 +305,18 @@ object HActivityStack {
 
     /**
      * 栈中是否存在Calss对应的对象
-     *
      * @param cls
-     * *
      * @return
      */
     fun exist(cls: Class<*>): Boolean {
         synchronized(stack) {
-            return Stream.of(stack).filter { a -> null != a && cls == a.javaClass }.count() > 0
+            return Stream.of(stack).filter { a -> a != null && cls == a.javaClass }.count() > 0
         }
     }
 
     /**
      * 栈中是存在Calss对应的对象数
-
      * @param cls
-     * *
      * @return
      */
     fun existCount(cls: Class<*>): Int {

@@ -59,7 +59,6 @@ public class ViewModel implements Serializable, Cloneable {
     }
 
     public void reset() {
-
     }
 
     /**

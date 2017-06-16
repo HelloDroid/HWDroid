@@ -107,7 +107,7 @@ public class HDialogManager {
                     baseDialogFragment.setTargetFragment(fragment, DIALOG_REQUEST_CODE);
                 }
                 if (fragmentActivity != null && fragmentActivity instanceof IBaseDialogFragment) {
-                    ((IBaseDialogFragment) fragmentActivity).showCallback(dialogExchangeModel.getTag());
+                    ((IBaseDialogFragment) fragmentActivity).showDialogCallback(dialogExchangeModel.getTag());
                 }
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.add(baseDialogFragment, dialogExchangeModel.getTag());

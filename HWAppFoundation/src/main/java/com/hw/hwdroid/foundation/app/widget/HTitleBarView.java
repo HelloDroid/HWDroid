@@ -38,7 +38,6 @@ import common.android.foundation.app.HActivityStack;
 
 public class HTitleBarView extends LinearLayoutCompat {
 
-
     private final int MAX_WIDTH_DP = 100;
 
     private AppCompatTextView titleTv;

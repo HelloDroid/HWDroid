@@ -84,10 +84,11 @@ object HWDialogManager {
         try {
             baseDialogFragment?.let {
                 if (fragment != null) {
-                    baseDialogFragment?.setTargetFragment(fragment, DIALOG_REQUEST_CODE)
+                    baseDialogFragment.setTargetFragment(fragment, DIALOG_REQUEST_CODE)
                 }
-                if (activity != null && activity is IBaseDialogFragment) {
-                    activity.showCallback(dialogEM.tag)
+
+                if (activity is IBaseDialogFragment) {
+                    activity.showDialogCallback(dialogEM.tag)
                 }
 
                 val ft = fragmentManager.beginTransaction()

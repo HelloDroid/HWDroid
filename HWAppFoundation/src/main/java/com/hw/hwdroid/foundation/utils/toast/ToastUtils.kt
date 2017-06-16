@@ -34,24 +34,24 @@ class ToastUtils private constructor(_Context: Context) {
      * 自定义toast
      *
      * @param messageResId
-     * @param dur
+     * @param duration
      * @param judgeAppIsForeground  判断APP是否在前台
      * @param action                延迟执行的动作
      */
-    @Synchronized fun showCustomToast(@StringRes messageResId: Int, @ToastUtils.Duration dur: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
-        customToast.show(messageResId, dur, judgeAppIsForeground, gravity, xOffset, yOffset, action)
+    @Synchronized fun showCustomToast(@StringRes messageResId: Int, @ToastUtils.Duration duration: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
+        customToast.show(messageResId, duration, judgeAppIsForeground, gravity, xOffset, yOffset, action)
     }
 
     /**
      * 自定义toast
      *
      * @param message
-     * @param dur
+     * @param duration
      * @param judgeAppIsForeground  判断APP是否在前台
      * @param action                延迟执行的动作
      */
-    @Synchronized fun showCustomToast(message: CharSequence, @ToastUtils.Duration dur: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
-        customToast.show(message, dur, judgeAppIsForeground, gravity, xOffset, yOffset, action)
+    @Synchronized fun showCustomToast(message: CharSequence, @ToastUtils.Duration duration: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
+        customToast.show(message, duration, judgeAppIsForeground, gravity, xOffset, yOffset, action)
     }
 
     @IntDef(Toast.LENGTH_SHORT.toLong(), Toast.LENGTH_LONG.toLong())
@@ -82,8 +82,8 @@ class ToastUtils private constructor(_Context: Context) {
         /**
          *
          */
-        @JvmOverloads fun show(context: Context, @StringRes messageResId: Int, @Duration dur: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
-            show(context, ResourceUtils.getString(context, messageResId, ""), dur, gravity, xOffset, yOffset, action)
+        @JvmOverloads fun show(context: Context, @StringRes messageResId: Int, @Duration duration: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
+            show(context, ResourceUtils.getString(context, messageResId, ""), duration, gravity, xOffset, yOffset, action)
         }
 
         /**
@@ -94,10 +94,10 @@ class ToastUtils private constructor(_Context: Context) {
          * @param gravity       Gravity.CENTER
          * @param xOffset       0
          * @param yOffset       0
-         * @param dur           duration
+         * @param duration           duration
          * @param action        延迟执行的动作
          */
-        @JvmOverloads fun show(context: Context, message: CharSequence, @Duration dur: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
+        @JvmOverloads fun show(context: Context, message: CharSequence, @Duration duration: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
             if (StringUtils.isNullOrWhiteSpace(message)) {
                 return
             }
@@ -108,11 +108,11 @@ class ToastUtils private constructor(_Context: Context) {
             toast.view = view
 
             toast.setGravity(gravity, xOffset, yOffset)
-            toast.duration = dur
+            toast.duration = duration
             toast.show()
 
             if (action != null) {
-                Observable.just(1).delay((dur + 1).toLong(), TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(action, Consumer { onError -> Logger.e(onError) })
+                Observable.just(1).delay((duration + 1).toLong(), TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(action, Consumer { onError -> Logger.e(onError) })
             }
         }
     }
