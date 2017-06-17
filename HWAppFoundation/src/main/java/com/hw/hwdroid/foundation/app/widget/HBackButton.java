@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import com.hw.hwdroid.foundation.R;
 import com.orhanobut.logger.Logger;
 
-import common.android.foundation.app.HActivityStack;
+import common.android.foundation.app.HWActivityStack;
 
 /**
  * Back Button
@@ -56,11 +56,11 @@ public class HBackButton extends AppCompatImageView {
         try {
             Context context = getContext();
             if (context instanceof Activity) {
-                HActivityStack.INSTANCE.pop((Activity) context);
+                HWActivityStack.INSTANCE.pop((Activity) context);
             } else {
-                Activity activity = HActivityStack.INSTANCE.curr();
+                Activity activity = HWActivityStack.INSTANCE.curr();
                 if (null != activity) {
-                    HActivityStack.INSTANCE.pop();
+                    HWActivityStack.INSTANCE.pop();
                 }
             }
         } catch (Exception e) {

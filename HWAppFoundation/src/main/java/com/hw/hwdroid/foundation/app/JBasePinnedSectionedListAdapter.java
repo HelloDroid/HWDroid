@@ -21,14 +21,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 /**
  * Created by ChenJ on 16/8/26.
  */
-public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<Bean>, Bean, SectionHeaderHolderView extends HBaseViewHolder, HolderView extends HBaseViewHolder> extends PinnedSectionedListAdapter {
+public abstract class JBasePinnedSectionedListAdapter<Section extends HWExGroup<Bean>, Bean, SectionHeaderHolderView extends HWBaseViewHolder, HolderView extends HWBaseViewHolder> extends PinnedSectionedListAdapter {
 
     protected LayoutInflater layoutInflater;
     private Context context;
 
     protected List<Section> dataList = new ArrayList<>();
 
-    public HBasePinnedSectionedListAdapter(Context context) {
+    public JBasePinnedSectionedListAdapter(Context context) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -609,7 +609,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
         final SectionHeaderHolderView tag = (SectionHeaderHolderView) convertView.getTag();
 
         // 绑定数据
-        if (null != convertView && null != tag && null != bean) {
+        if (convertView != null && tag != null && bean != null) {
             bindSectionData(section, convertView, parent, bean, tag);
         }
 
@@ -675,7 +675,7 @@ public abstract class HBasePinnedSectionedListAdapter<Section extends HExGroup<B
         final HolderView tag = (HolderView) convertView.getTag();
 
         // 绑定数据
-        if (null != convertView && null != tag && null != bean) {
+        if (convertView != null && tag != null && bean != null) {
             bindData(section, positionInSection, convertView, parent, bean, tag);
         }
 

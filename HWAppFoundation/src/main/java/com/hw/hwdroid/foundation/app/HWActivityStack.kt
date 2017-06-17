@@ -12,7 +12,7 @@ import java.util.*
  * Created by ChenJ on 2017/4/21.
  */
 
-object HActivityStack {
+object HWActivityStack {
 
     private val stack = Stack<Activity>()
 

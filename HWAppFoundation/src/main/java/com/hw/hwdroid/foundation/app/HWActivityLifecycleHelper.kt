@@ -12,7 +12,7 @@ import com.orhanobut.logger.Logger
  *
  * Created by ChenJ on 2017/5/11.
  */
-object HActivityLifecycleHelper : Application.ActivityLifecycleCallbacks {
+object HWActivityLifecycleHelper : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
         Logger.d(activity)

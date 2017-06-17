@@ -7,7 +7,7 @@ import com.hw.hwdroid.foundation.app.model.ViewModelFragment
 /**
  * Created by ChenJ on 2017/4/21.
  */
-abstract class HLazyFragment<ViewModelData : ViewModelFragment> : HBaseFragment<ViewModelData>() {
+abstract class HWLazyFragment<ViewModelData : ViewModelFragment> : HWBaseFragment<ViewModelData>() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

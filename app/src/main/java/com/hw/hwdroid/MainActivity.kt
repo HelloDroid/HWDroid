@@ -6,10 +6,10 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.hw.hwdroid.foundation.app.HBaseActivity
+import com.hw.hwdroid.foundation.app.HWBaseActivity
 import com.hw.hwdroid.foundation.app.model.ViewModelActivity
 
-class MainActivity : HBaseActivity<ViewModelActivity>() {
+class MainActivity : HWBaseActivity<ViewModelActivity>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

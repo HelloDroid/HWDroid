@@ -32,7 +32,7 @@ import com.hw.hwdroid.foundation.app.rx.bus.HRxBus
 import com.hw.hwdroid.foundation.app.widget.HTitleBarView
 import com.hw.hwdroid.foundation.utils.ResourceUtils
 import com.orhanobut.logger.Logger
-import common.android.foundation.app.HActivityStack
+import common.android.foundation.app.HWActivityStack
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ import java.util.*
  * 所有activity父类
  * Created by ChenJ on 2017/2/16.
  */
-open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(), HPermissionListener, HBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack, IBaseDialogFragment {
+open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(), HPermissionListener, HWBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack, IBaseDialogFragment {
 
     /** 用于检测回退Fragment >= 0  */
     protected var backStackEntryCount4Fragment: Int = 0
@@ -59,7 +59,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         super.onCreate(savedInstanceState)
 
         HRxBus.getInstance().init(this)
-        HActivityStack.push(this)
+        HWActivityStack.push(this)
 
         initPrepare()
 
@@ -385,7 +385,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         return extras
     }
 
-    fun getActivity(): HBaseActivity<ViewModelData> {
+    fun getActivity(): HWBaseActivity<ViewModelData> {
         return this
     }
 
@@ -532,7 +532,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         val size = fragments.size
         for (i in size - 1 downTo 0) {
             val fragment = fragments[i]
-            if (fragment is HBaseFragment<*>) {
+            if (fragment is HWBaseFragment<*>) {
                 fragment.saveUserRecordFromActivity()
                 isUserRecordSaved = true
             }
@@ -637,7 +637,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
 
     override fun finish() {
         saveUserRecord()
-        HActivityStack.remove(this)
+        HWActivityStack.remove(this)
         super.finish()
     }
 
@@ -645,7 +645,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
         try {
             unbindButterKnife()
             HRxBus.getInstance().unRegister(this)
-            HActivityStack.pop(this, false)
+            HWActivityStack.pop(this, false)
         } catch (e: Exception) {
             Logger.e(e)
         }
@@ -674,7 +674,7 @@ open class HBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(
 
     }
 
-    open fun startActivity(cls: Class<HBaseActivity<*>>) {
+    open fun startActivity(cls: Class<HWBaseActivity<*>>) {
         super.startActivity(Intent(this, cls))
     }
 

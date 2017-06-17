@@ -2,7 +2,7 @@ package com.hw.hwdroid.foundation.app
 
 import android.app.Activity
 import android.content.Context
-import common.android.foundation.app.HActivityStack
+import common.android.foundation.app.HWActivityStack
 
 
 /**
@@ -12,7 +12,7 @@ import common.android.foundation.app.HActivityStack
  * Created by ChenJ on 2017/2/16.
  */
 
-object FoundationContext {
+object HWFoundationContext {
 
     // TitleBar 默认使用IOS模式
     @JvmStatic var useIosModeForTitleBar = false
@@ -24,7 +24,7 @@ object FoundationContext {
     }
 
     @JvmStatic fun currActivity(): Activity? {
-        return HActivityStack.curr()
+        return HWActivityStack.curr()
     }
 
     @JvmStatic fun context(): Context? {

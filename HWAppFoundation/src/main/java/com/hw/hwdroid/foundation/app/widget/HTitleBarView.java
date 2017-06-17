@@ -20,14 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.hw.hwdroid.foundation.R;
-import com.hw.hwdroid.foundation.app.FoundationContext;
+import com.hw.hwdroid.foundation.app.HWFoundationContext;
 import com.hw.hwdroid.foundation.utils.ScreenUtils;
 import com.hw.hwdroid.foundation.utils.StringUtils;
 import com.hw.hwdroid.foundation.utils.UnitConverterUtils;
 import com.hw.hwdroid.foundation.utils.widget.ViewUtils;
 import com.orhanobut.logger.Logger;
 
-import common.android.foundation.app.HActivityStack;
+import common.android.foundation.app.HWActivityStack;
 
 
 /**
@@ -73,7 +73,7 @@ public class HTitleBarView extends LinearLayoutCompat {
         super(context, attrs);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HTitleBarView);
-        iosMode = typedArray == null ? FoundationContext.getUseIosModeForTitleBar() : typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_ios, FoundationContext.getUseIosModeForTitleBar());
+        iosMode = typedArray == null ? HWFoundationContext.getUseIosModeForTitleBar() : typedArray.getBoolean(R.styleable.HTitleBarView_htitlebar_ios, HWFoundationContext.getUseIosModeForTitleBar());
         LayoutInflater.from(context).inflate(iosMode ? R.layout.common_title_bar_ios : R.layout.common_title_bar, this);
 
         titleBarBackView = (LinearLayoutCompat) findViewById(R.id.titleBarBackView);
@@ -132,11 +132,11 @@ public class HTitleBarView extends LinearLayoutCompat {
 
         titleBarBackView.setOnClickListener(v -> {
             if (getContext() instanceof Activity) {
-                HActivityStack.INSTANCE.pop((Activity) getContext());
+                HWActivityStack.INSTANCE.pop((Activity) getContext());
             } else {
-                Activity activity = HActivityStack.INSTANCE.curr();
+                Activity activity = HWActivityStack.INSTANCE.curr();
                 if (null != activity) {
-                    HActivityStack.INSTANCE.pop();
+                    HWActivityStack.INSTANCE.pop();
                 }
             }
         });

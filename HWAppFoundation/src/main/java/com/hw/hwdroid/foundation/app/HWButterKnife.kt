@@ -20,9 +20,9 @@ fun <V : View> SupportDialogFragment.bindView(@IdRes id: Int): ReadOnlyProperty<
 fun <V : View> Fragment.bindView(@IdRes id: Int): ReadOnlyProperty<Fragment, V> = required(id, viewFinder)
 fun <V : View> SupportFragment.bindView(@IdRes id: Int): ReadOnlyProperty<SupportFragment, V> = required(id, viewFinder)
 fun <V : View> ViewHolder.bindView(@IdRes id: Int): ReadOnlyProperty<ViewHolder, V> = required(id, viewFinder)
-fun <V : View> View.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<View, V?> = optional(id, viewFinder)
 
 
+public fun <V : View> View.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<View, V?> = optional(id, viewFinder)
 public fun <V : View> Activity.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<Activity, V?> = optional(id, viewFinder)
 public fun <V : View> Dialog.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<Dialog, V?> = optional(id, viewFinder)
 public fun <V : View> DialogFragment.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<DialogFragment, V?> = optional(id, viewFinder)
@@ -30,6 +30,7 @@ public fun <V : View> SupportDialogFragment.bindOptionalView(@IdRes id: Int): Re
 public fun <V : View> Fragment.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<Fragment, V?> = optional(id, viewFinder)
 public fun <V : View> SupportFragment.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<SupportFragment, V?> = optional(id, viewFinder)
 public fun <V : View> ViewHolder.bindOptionalView(@IdRes id: Int): ReadOnlyProperty<ViewHolder, V?> = optional(id, viewFinder)
+
 public fun <V : View> View.bindViews(vararg ids: Int): ReadOnlyProperty<View, List<V>> = required(ids, viewFinder)
 public fun <V : View> Activity.bindViews(vararg ids: Int): ReadOnlyProperty<Activity, List<V>> = required(ids, viewFinder)
 public fun <V : View> Dialog.bindViews(vararg ids: Int): ReadOnlyProperty<Dialog, List<V>> = required(ids, viewFinder)
@@ -38,6 +39,7 @@ public fun <V : View> SupportDialogFragment.bindViews(vararg ids: Int): ReadOnly
 public fun <V : View> Fragment.bindViews(vararg ids: Int): ReadOnlyProperty<Fragment, List<V>> = required(ids, viewFinder)
 public fun <V : View> SupportFragment.bindViews(vararg ids: Int): ReadOnlyProperty<SupportFragment, List<V>> = required(ids, viewFinder)
 public fun <V : View> ViewHolder.bindViews(vararg ids: Int): ReadOnlyProperty<ViewHolder, List<V>> = required(ids, viewFinder)
+
 public fun <V : View> View.bindOptionalViews(vararg ids: Int): ReadOnlyProperty<View, List<V>> = optional(ids, viewFinder)
 public fun <V : View> Activity.bindOptionalViews(vararg ids: Int): ReadOnlyProperty<Activity, List<V>> = optional(ids, viewFinder)
 public fun <V : View> Dialog.bindOptionalViews(vararg ids: Int): ReadOnlyProperty<Dialog, List<V>> = optional(ids, viewFinder)

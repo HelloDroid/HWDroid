@@ -20,7 +20,7 @@ import com.hw.hwdroid.foundation.utils.network.NetWorkUtils
  * Created by ChenJ on 2017/2/16.
  */
 // @HContentViewRes(R.layout.activity_web_view)
-class HBaseWebViewActivity<ViewModelData : ViewModelActivity> : HBaseActivity<ViewModelData>() {
+class HWBaseWebViewActivity<ViewModelData : ViewModelActivity> : HWBaseActivity<ViewModelData>() {
 
     companion object {
         val EXTRA_URL = "web_view_url"

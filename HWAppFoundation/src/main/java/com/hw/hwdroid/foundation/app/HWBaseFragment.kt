@@ -28,7 +28,7 @@ import com.orhanobut.logger.Logger
 /**
  * Base Fragment
  */
-open class HBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPermissionListener {
+open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPermissionListener {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(data: ViewModel)
@@ -42,7 +42,7 @@ open class HBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPermi
         protected set
 
 
-    /** 是否可见状态 为了避免和[HBaseFragment.isVisible]冲突  */
+    /** 是否可见状态 为了避免和[HWBaseFragment.isVisible]冲突  */
     protected var isShowing: Boolean = false
 
     /**
@@ -89,8 +89,8 @@ open class HBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPermi
         activity
     }
 
-    val baseActivity: HBaseActivity<*>?
-        get() = activity as HBaseActivity<*>?
+    val baseActivity: HWBaseActivity<*>?
+        get() = activity as HWBaseActivity<*>?
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

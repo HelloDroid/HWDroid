@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import com.hw.hwdroid.foundation.R
-import com.hw.hwdroid.foundation.app.FoundationContext
+import com.hw.hwdroid.foundation.app.HWFoundationContext
 import com.hw.hwdroid.foundation.utils.ResourceUtils
 import com.hw.hwdroid.foundation.utils.StringUtils
 import com.orhanobut.logger.Logger
@@ -65,7 +65,7 @@ class ToastUtils private constructor(_Context: Context) {
         @Synchronized fun instance(): ToastUtils? {
             synchronized(ToastUtils::class.java) {
                 if (toastUtil == null) {
-                    val context = FoundationContext.getApplicationContext()
+                    val context = HWFoundationContext.getApplicationContext()
                     if (context != null) {
                         toastUtil = ToastUtils(context)
                     }

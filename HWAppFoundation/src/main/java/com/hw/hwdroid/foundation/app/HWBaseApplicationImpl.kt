@@ -6,7 +6,7 @@ import android.content.res.Configuration
 import com.hw.hwdroid.foundation.BuildConfig
 import com.orhanobut.logger.LogLevel
 import com.orhanobut.logger.Logger
-import common.android.foundation.app.HActivityLifecycleHelper
+import common.android.foundation.app.HWActivityLifecycleHelper
 
 
 /**
@@ -14,7 +14,7 @@ import common.android.foundation.app.HActivityLifecycleHelper
  *
  * Created by chen.jiana on 2015/9/28.
  */
-open class HBaseApplicationImpl : Application() {
+open class HWBaseApplicationImpl : Application() {
 
     /**
      * @see android.content.ContextWrapper.getApplicationContext
@@ -30,10 +30,10 @@ open class HBaseApplicationImpl : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        FoundationContext.inits(this)
+        HWFoundationContext.inits(this)
         Logger.init().logLevel(if (BuildConfig.DEBUG) LogLevel.FULL else LogLevel.NONE)
 
-        registerActivityLifecycleCallbacks(HActivityLifecycleHelper)
+        registerActivityLifecycleCallbacks(HWActivityLifecycleHelper)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
