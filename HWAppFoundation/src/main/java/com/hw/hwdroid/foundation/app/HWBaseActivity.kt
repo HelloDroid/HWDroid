@@ -144,7 +144,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
 
         isUseParentView = true
         val view = LayoutInflater.from(this).inflate(if (themeLight) R.layout.common_action_layout_light else R.layout.common_action_layout, null, false)
-        val content = view.findViewById(R.id.content) as ViewGroup?
+        val content = view.findViewById(R.id.content) as? ViewGroup
 
         content?.removeAllViews()
 
@@ -175,7 +175,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
         if (isUseParentView) return
 
         if (javaClass.isAnnotationPresent(HFitsSystemWindows::class.java) && javaClass.getAnnotation(HFitsSystemWindows::class.java).value) {
-            val contentFrameLayout = findViewById(Window.ID_ANDROID_CONTENT) as ViewGroup?
+            val contentFrameLayout = findViewById(Window.ID_ANDROID_CONTENT) as? ViewGroup
             val parentView = contentFrameLayout?.getChildAt(0)
             if (Build.VERSION.SDK_INT < 16) {
                 parentView?.fitsSystemWindows = true
@@ -227,7 +227,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      * init Toolbar
      */
     protected fun initToolbar() {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar?
+        val toolbar = findViewById(R.id.toolbar) as? Toolbar
 
         toolbar?.let {
             setSupportActionBar(toolbar)
@@ -264,7 +264,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
         }
 
         if (title == null) {
-            val titleBar = findViewById(R.id.titleBar) as HTitleBarView?
+            val titleBar = findViewById(R.id.titleBar) as? HTitleBarView
             title = titleBar?.titleFromAttribute
             has = titleBar != null
         }
@@ -305,11 +305,11 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      */
     open fun setToolbarTitle(title: CharSequence?) {
         runOnUiThread {
-            val titleBar = findViewById(R.id.titleBar) as HTitleBarView?
+            val titleBar = findViewById(R.id.titleBar) as? HTitleBarView
             titleBar?.setTitle(StringUtils.changeNull(title))
 
             if (titleBar == null && getToolbar() != null) {
-                val toolbarTitle = getToolbar()?.findViewById(R.id.titleBarTitleTv) as TextView?
+                val toolbarTitle = getToolbar()?.findViewById(R.id.titleBarTitleTv) as? TextView
                 toolbarTitle?.text = StringUtils.changeNull(title)
             }
         }
@@ -331,7 +331,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      * AppBarLayout
      */
     open fun getAppBarLayout(): AppBarLayout? {
-        return findViewById(R.id.appBar) as AppBarLayout?
+        return findViewById(R.id.appBar) as? AppBarLayout
     }
 
     /**
@@ -339,7 +339,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      */
     open fun getToolbar(): Toolbar? {
         if (toolbar == null) {
-            toolbar = findViewById(R.id.toolbar) as Toolbar?
+            toolbar = findViewById(R.id.toolbar) as? Toolbar
         }
 
         return toolbar
@@ -349,7 +349,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      * HTitleBarView
      */
     open fun getTitleBar(): HTitleBarView? {
-        return findViewById(R.id.titleBar) as HTitleBarView?
+        return findViewById(R.id.titleBar) as? HTitleBarView
     }
 
     override fun onFragmentInteraction(data: ViewModel) {
