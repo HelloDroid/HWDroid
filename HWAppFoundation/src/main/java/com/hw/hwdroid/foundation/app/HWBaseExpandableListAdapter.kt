@@ -9,7 +9,6 @@ import com.hw.hwdroid.foundation.app.annotation.HAtomicData
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.util.*
 
 /**
  * BaseExpandableListAdapter
@@ -20,7 +19,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
 
     val context: Context = _Context
     protected val layoutInflater: LayoutInflater
-    protected var groupList: MutableList<Group> = ArrayList()
+    protected var groupList: MutableList<Group?> = ArrayList()
 
     init {
         layoutInflater = LayoutInflater.from(this.context)
@@ -30,7 +29,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
     /**
      * setter and getter Data
      */
-    var data: MutableList<Group>
+    var data: MutableList<Group?>
         get() {
             return groupList
         }
@@ -41,7 +40,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param groupList
      * @param notifyDataSetChanged 更新ListView
      */
-    fun setData(groupList: MutableList<Group>?, notifyDataSetChanged: Boolean = false) {
+    fun setData(groupList: MutableList<Group?>?, notifyDataSetChanged: Boolean = false) {
         // 使用原子数据，即直接将DataList替换为List，否则清除并add
         if (javaClass.isAnnotationPresent(HAtomicData::class.java) && javaClass.getAnnotation(HAtomicData::class.java).value) {
             this.groupList = groupList ?: ArrayList()
@@ -61,7 +60,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param groupList
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun reAddData(groupList: List<Group>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun reAddData(groupList: List<Group?>?, notifyDataSetChanged: Boolean = false) {
         clear()
         addAll(groupList, notifyDataSetChanged)
     }
@@ -71,7 +70,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param groupList
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun addAll(groupList: List<Group>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAll(groupList: List<Group?>?, notifyDataSetChanged: Boolean = false) {
         if (groupList == null || groupList.isEmpty()) {
             return
         }
@@ -107,7 +106,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param notifyDataSetChanged 更新ListView
      * @return
      */
-    @JvmOverloads fun removeAll(groupList: Collection<Group>?, notifyDataSetChanged: Boolean = false): Boolean {
+    @JvmOverloads fun removeAll(groupList: Collection<Group?>?, notifyDataSetChanged: Boolean = false): Boolean {
         if (groupList == null || groupList.isEmpty() || isEmpty) {
             return false
         }
@@ -143,9 +142,11 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * Child Data List
      * @return
      */
-    val children: List<List<Child>>
+    val children: List<List<Child?>>
         get() {
-            return groupList.map { it.children }
+//            val arr: MutableList<MutableList<Child?>> = ArrayList()
+//            groupList.forEach({ value -> arr.add(value?.children ?: ArrayList()) })
+            return groupList.map { it?.children ?: ArrayList() }
         }
 
     /**
@@ -154,7 +155,7 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param children
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun setChildren(groupPosition: Int, children: MutableList<Child>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun setChildren(groupPosition: Int, children: MutableList<Child?>?, notifyDataSetChanged: Boolean = false) {
         val group = getGroup(groupPosition) ?: return
         group.children = children ?: ArrayList()
 
@@ -169,15 +170,12 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param children
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun addAllChildren(groupPosition: Int, children: List<Child>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAllChildren(groupPosition: Int, children: List<Child?>?, notifyDataSetChanged: Boolean = false) {
         if (children == null || children.isEmpty()) return
         val group = getGroup(groupPosition) ?: return
 
-        children?.let {
-            group.children.addAll(children)
-            if (notifyDataSetChanged) {
-                notifyDataSetChanged()
-            }
+        if (group.children?.addAll(children) ?: false && notifyDataSetChanged) {
+            notifyDataSetChanged()
         }
     }
 
@@ -187,12 +185,10 @@ abstract class HWBaseExpandableListAdapter<Group : HWExGroup<Child>, Child>(_Con
      * @param child
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun addChild(groupPosition: Int, child: Child, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addChild(groupPosition: Int, child: Child?, notifyDataSetChanged: Boolean = false) {
         val group = getGroup(groupPosition) ?: return
 
-        group.children.add(child)
-
-        if (notifyDataSetChanged) {
+        if (group.children?.add(child) ?: false && notifyDataSetChanged) {
             notifyDataSetChanged()
         }
     }

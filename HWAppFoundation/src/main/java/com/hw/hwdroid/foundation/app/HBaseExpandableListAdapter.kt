@@ -42,9 +42,9 @@ abstract class HBaseExpandableListAdapter<Group : HWExGroup<Child>, Child, GHold
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         val holder: GHolder? = convertView?.tag as GHolder?
         if (convertView == null || holder == null) {
-            val vh = onCreateViewGroupHolder(getGroupType(groupPosition), parent)
-            onBindGroupViewHolder(groupPosition, isExpanded, vh.itemView, getGroup(groupPosition), vh)
-            return vh.itemView
+            val pair = onCreateViewGroupHolder(getGroupType(groupPosition), parent)
+            onBindGroupViewHolder(groupPosition, isExpanded, pair.first, getGroup(groupPosition), pair.second)
+            return pair.first
         }
 
         onBindGroupViewHolder(groupPosition, isExpanded, convertView, getGroup(groupPosition), holder)
@@ -53,9 +53,11 @@ abstract class HBaseExpandableListAdapter<Group : HWExGroup<Child>, Child, GHold
 
     /**
      * 初始化Group View Holder
-     * eg: new ViewHolder(inflate(R.layout.xx, parent, false))
+     * eg: View v = inflate(R.layout.xx, parent, false)
+     *     Holder h = new ViewHolder(v)
+     *     return Pair(v, h)
      */
-    protected abstract fun onCreateViewGroupHolder(viewType: Int, parent: ViewGroup?): GHolder
+    protected abstract fun onCreateViewGroupHolder(viewType: Int, parent: ViewGroup?): Pair<View, GHolder>
 
     protected abstract fun onBindGroupViewHolder(groupPosition: Int, isExpanded: Boolean, view: View, group: Group?, holder: GHolder)
 
@@ -65,9 +67,9 @@ abstract class HBaseExpandableListAdapter<Group : HWExGroup<Child>, Child, GHold
         val holder = convertView?.tag as CHolder?
 
         if (convertView == null || holder == null) {
-            val vh = onCreateViewChildHolder(getChildType(groupPosition, childPosition), parent)
-            onBindChildViewHolder(groupPosition, childPosition, isLastChild, vh.itemView, bean, vh)
-            return vh.itemView
+            val pair = onCreateViewChildHolder(getChildType(groupPosition, childPosition), parent)
+            onBindChildViewHolder(groupPosition, childPosition, isLastChild, pair.first, bean, pair.second)
+            return pair.first
         }
 
         onBindChildViewHolder(groupPosition, childPosition, isLastChild, convertView, bean, holder)
@@ -75,10 +77,12 @@ abstract class HBaseExpandableListAdapter<Group : HWExGroup<Child>, Child, GHold
     }
 
     /**
-     * 初始化Child View Holder
-     * eg: new ViewHolder(inflate(R.layout.xx, parent, false))
+     * 初始化初始化Child View Holder
+     * eg: View v = inflate(R.layout.xx, parent, false)
+     *     Holder h = new ViewHolder(v)
+     *     return Pair(v, h)
      */
-    protected abstract fun onCreateViewChildHolder(viewType: Int, parent: ViewGroup?): CHolder
+    protected abstract fun onCreateViewChildHolder(viewType: Int, parent: ViewGroup?): Pair<View, CHolder>
 
     protected abstract fun onBindChildViewHolder(groupPosition: Int, childPosition: Int, isLastChild: Boolean, view: View, child: Child?, holder: CHolder)
 

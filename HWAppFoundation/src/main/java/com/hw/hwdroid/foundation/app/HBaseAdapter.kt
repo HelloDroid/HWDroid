@@ -29,9 +29,9 @@ abstract class HBaseAdapter<Bean, Holder : HWBaseViewHolder>(_Context: Context) 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val holder: Holder? = convertView?.tag as Holder?
         if (convertView == null || holder == null) {
-            val vh = onCreateViewHolder(getItemViewType(position), parent)
-            onBindViewHolder(position, vh.itemView, getItem(position), vh)
-            return vh.itemView
+            val pair = onCreateViewHolder(getItemViewType(position), parent)
+            onBindViewHolder(position, pair.first, getItem(position), pair.second)
+            return pair.first
         }
 
         // 绑定数据
@@ -41,9 +41,11 @@ abstract class HBaseAdapter<Bean, Holder : HWBaseViewHolder>(_Context: Context) 
 
     /**
      * Create View Holder
-     * eg: new ViewHolder(inflate(R.layout.xx, parent, false))
+     * eg: View v = inflate(R.layout.xx, parent, false)
+     *     Holder h = new ViewHolder(v)
+     *     return Pair(v, h)
      */
-    abstract fun onCreateViewHolder(viewType: Int, parent: ViewGroup?): Holder
+    abstract fun onCreateViewHolder(viewType: Int, parent: ViewGroup?): Pair<View, Holder>
 
     /**
      * 数据绑定

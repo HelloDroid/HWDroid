@@ -9,22 +9,21 @@ import com.orhanobut.logger.Logger
 import common.android.ui.myxlistview.libraries.PinnedSectionedListAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.util.*
 
 /**
  * Created by ChenJ on 2017/6/17.
  */
-abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>(val _Context: Context) : PinnedSectionedListAdapter() {
+abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean?>, Bean>(val _Context: Context) : PinnedSectionedListAdapter() {
 
     val context: Context = _Context
     protected var layoutInflater: LayoutInflater
-    protected var dataList: MutableList<Section> = ArrayList()
+    protected var dataList: MutableList<Section?> = ArrayList()
 
     init {
         layoutInflater = LayoutInflater.from(context)
     }
 
-    var data: MutableList<Section>
+    var data: MutableList<Section?>
         get() = dataList
         set(sectionData) = setData(sectionData, false)
 
@@ -33,7 +32,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param sectionData
      * @param notifyDataSetChanged  更新UI
      */
-    fun setData(sectionData: MutableList<Section>?, notifyDataSetChanged: Boolean = false) {
+    fun setData(sectionData: MutableList<Section?>?, notifyDataSetChanged: Boolean = false) {
         try {
             // 使用原子数据，即直接将DataList替换为List，否则清除并add
             if (javaClass.isAnnotationPresent(HAtomicData::class.java) && javaClass.getAnnotation(HAtomicData::class.java).value) {
@@ -56,7 +55,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param sectionData
      * @param notifyDataSetChanged      更新UI
      */
-    @JvmOverloads fun reAddData(sectionData: List<Section>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun reAddData(sectionData: List<Section?>?, notifyDataSetChanged: Boolean = false) {
         clear()
         addAll(sectionData, notifyDataSetChanged)
     }
@@ -66,7 +65,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param sectionData
      * @param notifyDataSetChanged      更新UI
      */
-    @JvmOverloads fun addAll(sectionData: List<Section>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAll(sectionData: List<Section?>?, notifyDataSetChanged: Boolean = false) {
         if (sectionData == null || sectionData.isEmpty()) {
             return
         }
@@ -83,7 +82,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param sectionData
      * @param notifyDataSetChanged  更新UI
      */
-    @JvmOverloads fun addAllAndCheckItems(sectionData: List<Section>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAllAndCheckItems(sectionData: List<Section?>?, notifyDataSetChanged: Boolean = false) {
         if (sectionData == null || sectionData.isEmpty()) {
             return
         }
@@ -98,71 +97,24 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
 
         // 遍历新数据
         for (section in sectionData) {
-            if (section == null) {
-                continue
-            }
-
             val indexOf = dataList.indexOf(section)
             if (indexOf != -1) {
-                dataList[indexOf].children.addAll(section.children)
+                if (section != null) {
+                    if (dataList[indexOf] == null) {
+                        dataList[indexOf] = section
+                    } else {
+                        if (dataList[indexOf]?.children == null) {
+                            dataList[indexOf]?.children = section.children
+                        } else if (section.children?.isNotEmpty() ?: false) {
+                            dataList[indexOf]?.children?.addAll(section.children!!)
+                        }
+                    }
+                }
             } else {
                 dataList.add(section)
             }
         }
 
-        if (notifyDataSetChanged) {
-            notifyDataSetChanged()
-        }
-    }
-
-    /**
-     * add all Data 并检测随后一项数据
-     * @param sectionData
-     * @param notifyDataSetChanged      更新UI
-     */
-    @JvmOverloads fun addAllAndCheckLastItem(sectionData: MutableList<Section>?, notifyDataSetChanged: Boolean = false) {
-        if (sectionData == null || sectionData.isEmpty()) {
-            return
-        }
-
-        if (dataList.isEmpty()) {
-            dataList.addAll(sectionData)
-            if (notifyDataSetChanged) {
-                notifyDataSetChanged()
-            }
-            return
-        }
-
-        // 原列表最后一项
-        val oldLastItem = dataList[dataList.size - 1]
-
-        if (oldLastItem == null) {
-            this.dataList.addAll(sectionData)
-            if (notifyDataSetChanged) {
-                notifyDataSetChanged()
-            }
-            return
-        }
-
-        // 新数据第一项
-        val newFirstItem = sectionData[0]
-
-        // 原列表最后一项与新数据第一项相同
-        if (oldLastItem == newFirstItem) {
-            val rLastItem = sectionData.removeAt(sectionData.size - 1)
-            if (rLastItem != null) {
-                oldLastItem.children.addAll(rLastItem.children)
-            }
-            if (!sectionData.isEmpty()) {
-                dataList.addAll(sectionData)
-            }
-            if (notifyDataSetChanged) {
-                notifyDataSetChanged()
-            }
-            return
-        }
-
-        dataList.addAll(sectionData)
         if (notifyDataSetChanged) {
             notifyDataSetChanged()
         }
@@ -175,7 +127,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @return
      */
     @JvmOverloads fun remove(section: Section?, notifyDataSetChanged: Boolean = false): Boolean {
-        if (dataList.isEmpty() || !dataList.remove(section)) {
+        if (!dataList.remove(section)) {
             return false
         }
 
@@ -192,8 +144,8 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param notifyDataSetChanged      更新UI
      * @return
      */
-    @JvmOverloads fun removeAll(sectionData: Collection<Section>, notifyDataSetChanged: Boolean = false): Boolean {
-        if (dataList.isEmpty() || !dataList.removeAll(sectionData)) {
+    @JvmOverloads fun removeAll(sectionData: Collection<Section?>?, notifyDataSetChanged: Boolean = false): Boolean {
+        if (sectionData == null || dataList.isEmpty() || !dataList.removeAll(sectionData)) {
             return false
         }
 
@@ -221,19 +173,9 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * Item Data List
      * @return
      */
-    val itemData: List<List<Bean>>
+    val itemData: List<List<Bean?>?>
         get() {
-            val itemList = ArrayList<List<Bean>>()
-
-            for (g in dataList!!) {
-                if (g == null) {
-                    itemList.add(ArrayList<Bean>())
-                } else {
-                    itemList.add(g.children)
-                }
-            }
-
-            return itemList
+            return dataList.map { it?.children ?: ArrayList() }
         }
 
     /**
@@ -242,13 +184,13 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param list
      * @param notifyDataSetChanged      更新UI
      */
-    @JvmOverloads fun setItem(sectionPosition: Int, list: List<Bean>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun setItem(sectionPosition: Int, list: List<Bean?>?, notifyDataSetChanged: Boolean = false) {
         val g = getSectionItem(sectionPosition) ?: return
 
-        g.children.clear()
+        g.children?.clear()
 
         if (list != null && !list.isEmpty()) {
-            g.children.addAll(list)
+            g.children?.addAll(list)
         }
 
         if (notifyDataSetChanged) {
@@ -262,15 +204,13 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
      * @param list
      * @param notifyDataSetChanged      更新UI
      */
-    @JvmOverloads fun addAllItem(sectionPosition: Int, list: List<Bean>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAllItem(sectionPosition: Int, list: List<Bean?>?, notifyDataSetChanged: Boolean = false) {
         if (list?.isEmpty() ?: false) {
             return
         }
 
-        val g = getSectionItem(sectionPosition)
-
         list?.let {
-            g?.children?.addAll(list)
+            getSectionItem(sectionPosition)?.children?.addAll(list)
             if (notifyDataSetChanged) {
                 notifyDataSetChanged()
             }
@@ -342,7 +282,7 @@ abstract class HWBasePinnedSectionedListAdapter<Section : HWExGroup<Bean>, Bean>
 
     override fun getCountForSection(section: Int): Int {
         try {
-            return getSectionItem(section)!!.children.size
+            return getSectionItem(section)?.children?.size ?: 0
         } catch (e: Exception) {
             return 0
         }

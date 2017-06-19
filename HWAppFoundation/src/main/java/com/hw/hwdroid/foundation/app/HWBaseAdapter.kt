@@ -19,7 +19,7 @@ import java.util.*
 abstract class HWBaseAdapter<Bean>(_Context: Context) : BaseAdapter() {
 
     val context: Context = _Context
-    private var dataList: MutableList<Bean> = ArrayList()
+    private var dataList: MutableList<Bean?> = ArrayList()
     protected val layoutInflater: LayoutInflater = LayoutInflater.from(_Context)
 
     init {
@@ -28,7 +28,7 @@ abstract class HWBaseAdapter<Bean>(_Context: Context) : BaseAdapter() {
     /**
      * setter and getter Data
      */
-    var data: MutableList<Bean>?
+    var data: MutableList<Bean?>
         set(value) = setData(value, false)
         get() = dataList
 //        set(value) {
@@ -46,7 +46,7 @@ abstract class HWBaseAdapter<Bean>(_Context: Context) : BaseAdapter() {
      * @param data
      * @param notifyDataSetChanged 更新ListView
      */
-    fun setData(data: MutableList<Bean>?, notifyDataSetChanged: Boolean = false) {
+    fun setData(data: MutableList<Bean?>?, notifyDataSetChanged: Boolean = false) {
         // 使用原子数据，即直接将DataList替换为List，否则清除并add
         if (javaClass.isAnnotationPresent(HAtomicData::class.java) && javaClass.getAnnotation(HAtomicData::class.java).value) {
             dataList = data ?: ArrayList()
@@ -67,7 +67,7 @@ abstract class HWBaseAdapter<Bean>(_Context: Context) : BaseAdapter() {
      * @param data
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun reAddData(data: List<Bean>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun reAddData(data: List<Bean?>?, notifyDataSetChanged: Boolean = false) {
         clear()
         addAll(data, notifyDataSetChanged)
     }
@@ -78,7 +78,7 @@ abstract class HWBaseAdapter<Bean>(_Context: Context) : BaseAdapter() {
      * @param data
      * @param notifyDataSetChanged 更新ListView
      */
-    @JvmOverloads fun addAll(data: List<Bean>?, notifyDataSetChanged: Boolean = false) {
+    @JvmOverloads fun addAll(data: List<Bean?>?, notifyDataSetChanged: Boolean = false) {
         if (data?.isEmpty() ?: false) {
             return
         }

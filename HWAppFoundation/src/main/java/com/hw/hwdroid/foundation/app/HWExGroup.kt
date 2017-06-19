@@ -5,6 +5,6 @@ package com.hw.hwdroid.foundation.app
  */
 interface HWExGroup<Child> {
 
-    var children: MutableList<Child>
+    var children: MutableList<Child?>?
 
 }

@@ -12,10 +12,10 @@ import java.util.*
  * BaseRecyclerAdapter
  * Created by ChenJ on 2017/6/17.
  */
-abstract class HWBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @JvmOverloads constructor(_Context: Context, _Data: MutableList<Data>? = null) : RecyclerView.Adapter<Holder>() {
+abstract class HWBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @JvmOverloads constructor(_Context: Context, _Data: MutableList<Data?>? = null) : RecyclerView.Adapter<Holder>() {
 
     val context: Context = _Context
-    protected var dataList: MutableList<Data> = ArrayList()
+    protected var dataList: MutableList<Data?> = ArrayList()
 
     init {
         setData(_Data)
@@ -24,11 +24,11 @@ abstract class HWBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @J
     /**
      * set data
      */
-    var data: MutableList<Data>
+    var data: MutableList<Data?>
         get() = dataList
         set(value) = setData(value, false)
 
-    fun setData(data: MutableList<Data>?, notifyDataSetChanged: Boolean = false) {
+    fun setData(data: MutableList<Data?>?, notifyDataSetChanged: Boolean = false) {
         if (javaClass.isAnnotationPresent(HAtomicData::class.java) && javaClass.getAnnotation(HAtomicData::class.java).value) {
             dataList = data ?: ArrayList()
 
@@ -47,7 +47,7 @@ abstract class HWBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @J
      * add all
      * @param data
      */
-    fun addAll(data: List<Data>?) {
+    fun addAll(data: List<Data?>?) {
         if (data == null || data.isEmpty()) {
             return
         }

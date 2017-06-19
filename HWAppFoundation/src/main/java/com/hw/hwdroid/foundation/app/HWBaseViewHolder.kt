@@ -15,7 +15,7 @@ open class HWBaseViewHolder(itemView: View) {
 
     // Create ViewHolder时的View，用于初始化
     // 建议：itemView只在Create时使用
-    val itemView: View = itemView
+    // val itemView: View = itemView
     private var unbinder: Unbinder? = null
 
     init {
