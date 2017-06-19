@@ -9,7 +9,7 @@ import java.lang.reflect.ParameterizedType
  * Base PinnedSectionedListAdapterKt
  * Created by ChenJ on 16/8/26.
  */
-abstract class HBasePinnedSectionedListAdapterKt<Section : HWExGroup<Bean>, Bean, SectionHeaderHolderView : HWBaseViewHolder, HolderView : HWBaseViewHolder>(_Context: Context) : HWBasePinnedSectionedListAdapter<Section, Bean>(_Context) {
+abstract class HBasePinnedSectionedListAdapterKt<Section : HWExGroup<Bean?>, Bean, SectionHeaderHolderView : HWBaseViewHolder, HolderView : HWBaseViewHolder>(_Context: Context) : HWBasePinnedSectionedListAdapter<Section, Bean>(_Context) {
 
     /**
      * Section HolderView Class
@@ -35,28 +35,28 @@ abstract class HBasePinnedSectionedListAdapterKt<Section : HWExGroup<Bean>, Bean
     override fun getSectionHeaderView(section: Int, convertView: View?, parent: ViewGroup?): View {
         val holder: SectionHeaderHolderView? = convertView?.tag as SectionHeaderHolderView?
         if (convertView == null || holder == null) {
-            val vh = onCreateSectionViewHolder(getSectionHeaderViewType(section), parent)
-            onBindSectionViewHolder(section, vh.itemView, getSectionItem(section), vh)
-            return vh.itemView
+            val pair = onCreateSectionViewHolder(getSectionHeaderViewType(section), parent)
+            onBindSectionViewHolder(section, pair.first, getSectionItem(section), pair.second)
+            return pair.first
         }
 
         onBindSectionViewHolder(section, convertView, getSectionItem(section), holder)
         return convertView
     }
 
-    abstract fun onCreateSectionViewHolder(viewType: Int, parent: ViewGroup?): SectionHeaderHolderView
+    abstract fun onCreateSectionViewHolder(viewType: Int, parent: ViewGroup?): Pair<View, SectionHeaderHolderView>
     abstract fun onBindSectionViewHolder(section: Int, view: View, bean: Section?, holder: SectionHeaderHolderView)
 
-    abstract fun onCreateItemViewHolder(viewType: Int, parent: ViewGroup?): HolderView
+    abstract fun onCreateItemViewHolder(viewType: Int, parent: ViewGroup?): Pair<View, HolderView>
     abstract fun onBindItemViewHolder(section: Int, positionInSection: Int, view: View, bean: Bean?, holder: HolderView)
 
     @Suppress("UNCHECKED_CAST")
     override fun getItemView(section: Int, positionInSection: Int, convertView: View?, parent: ViewGroup?): View {
         val holderView = convertView?.tag as HolderView?
         if (convertView == null || holderView == null) {
-            val vh = onCreateItemViewHolder(getItemViewType(section, positionInSection), parent)
-            onBindItemViewHolder(section, positionInSection, vh.itemView, getItem(section, positionInSection), vh)
-            return vh.itemView
+            val pair = onCreateItemViewHolder(getItemViewType(section, positionInSection), parent)
+            onBindItemViewHolder(section, positionInSection, pair.first, getItem(section, positionInSection), pair.second)
+            return pair.first
         }
 
         onBindItemViewHolder(section, positionInSection, convertView, getItem(section, positionInSection), holderView)

@@ -8,7 +8,7 @@ import android.view.ViewGroup
  * Base Recycler Adapter
  * Created by ChenJ on 2016/10/9.
  */
-abstract class HBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @JvmOverloads constructor(_Context: Context, _Data: MutableList<Data>? = null) : HWBaseRecyclerAdapter<Data, Holder>(_Context, _Data) {
+abstract class HBaseRecyclerAdapter<Data, Holder : HWBaseRecyclerViewHolder> @JvmOverloads constructor(_Context: Context, _Data: MutableList<Data?>? = null) : HWBaseRecyclerAdapter<Data, Holder>(_Context, _Data) {
 
     var onRecyclerViewItemClickListener: HWBaseRecyclerAdapter.OnRecyclerViewItemClickListener? = null
 

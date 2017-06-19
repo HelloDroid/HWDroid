@@ -19,7 +19,7 @@ import android.support.v4.app.FragmentActivity as SupportFragmentActivity
 /**
  * Activity Toast扩展
  */
-fun Activity.toast(message: CharSequence, dur: Int = Toast.LENGTH_SHORT) {
+fun Activity.toast(message: CharSequence?, dur: Int = Toast.LENGTH_SHORT) {
     ToastUtils.show(applicationContext, message, duration = dur)
 }
 
@@ -46,7 +46,7 @@ fun Activity.toast(@StringRes messageResId: Int, dur: Int = Toast.LENGTH_SHORT) 
  * @return
  */
 fun SupportFragmentActivity.showDialog(type: DialogType, tag: String = GUIDUtils.guid(),
-                                       negative: CharSequence = String(), positive: CharSequence, title: CharSequence = String(), content: CharSequence = String(),
+                                       negative: CharSequence? = String(), positive: CharSequence? = String(), title: CharSequence? = String(), content: CharSequence? = String(),
                                        cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false, fragment: SupportFragment? = null, callBack: DialogCallBackContainer? = null): BaseDialogFragment {
     val builder = DialogExchangeModel.DialogExchangeModelBuilder(type, tag)
 
@@ -80,7 +80,7 @@ fun SupportFragmentActivity.showDialog(type: DialogType, tag: String = GUIDUtils
  * @return
  */
 fun SupportFragmentActivity.showDialogBackAble(type: DialogType, tag: String = GUIDUtils.guid(),
-                                               negative: CharSequence = String(), positive: CharSequence = String(), title: CharSequence = String(), content: CharSequence = String()): BaseDialogFragment {
+                                               negative: CharSequence? = String(), positive: CharSequence? = String(), title: CharSequence? = String(), content: CharSequence? = String()): BaseDialogFragment {
     return showDialog(type, tag, negative, positive, title, content, true, true)
 }
 
@@ -96,8 +96,8 @@ fun SupportFragmentActivity.showDialogBackAble(type: DialogType, tag: String = G
  * @param canceledOnTouchOutside    空白可点击
  * @return
  */
-fun SupportFragmentActivity.showSingleDialog(tag: String = GUIDUtils.guid(), positive: CharSequence = String(),
-                                             title: CharSequence = String(), content: CharSequence = String(), cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): BaseDialogFragment {
+fun SupportFragmentActivity.showSingleDialog(tag: String = GUIDUtils.guid(), positive: CharSequence? = String(),
+                                             title: CharSequence? = String(), content: CharSequence? = String(), cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): BaseDialogFragment {
     return showDialog(DialogType.SINGLE, tag, String(), positive, title, content, cancelable, canceledOnTouchOutside)
 }
 
@@ -106,7 +106,7 @@ fun SupportFragmentActivity.showSingleDialog(tag: String = GUIDUtils.guid(), pos
  * Fragment 扩展 Dialog
  */
 fun SupportFragment.showDialog(type: DialogType, tag: String = GUIDUtils.guid(),
-                               negative: CharSequence = String(), positive: CharSequence, title: CharSequence = String(), content: CharSequence = String(),
+                               negative: CharSequence? = String(), positive: CharSequence? = String(), title: CharSequence? = String(), content: CharSequence? = String(),
                                cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false, callBack: DialogCallBackContainer? = null): BaseDialogFragment {
     val builder = DialogExchangeModel.DialogExchangeModelBuilder(type, tag)
 
@@ -132,13 +132,13 @@ fun SupportFragment.showDialog(type: DialogType, tag: String = GUIDUtils.guid(),
  * Fragment 扩展 Dialog
  */
 fun SupportFragment.showDialogBackAble(type: DialogType, tag: String = GUIDUtils.guid(),
-                                       negative: CharSequence = String(), positive: CharSequence = String(), title: CharSequence = String(), content: CharSequence = String()): BaseDialogFragment {
+                                       negative: CharSequence? = String(), positive: CharSequence? = String(), title: CharSequence? = String(), content: CharSequence? = String()): BaseDialogFragment {
     return showDialog(type, tag, negative, positive, title, content, true, true)
 }
 
 
-fun SupportFragment.showSingleDialog(tag: String = GUIDUtils.guid(), positive: CharSequence = String(),
-                                     title: CharSequence = String(), content: CharSequence = String(), cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): BaseDialogFragment {
+fun SupportFragment.showSingleDialog(tag: String = GUIDUtils.guid(), positive: CharSequence? = String(),
+                                     title: CharSequence? = String(), content: CharSequence? = String(), cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): BaseDialogFragment {
     return showDialog(DialogType.SINGLE, tag, String(), positive, title, content, cancelable, canceledOnTouchOutside)
 }
 

@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.hw.hwdroid.foundation.R
 import com.hw.hwdroid.foundation.app.HWFoundationContext
 import com.hw.hwdroid.foundation.utils.ResourceUtils
-import com.hw.hwdroid.foundation.utils.StringUtils
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,7 +49,7 @@ class ToastUtils private constructor(_Context: Context) {
      * @param judgeAppIsForeground  判断APP是否在前台
      * @param action                延迟执行的动作
      */
-    @Synchronized fun showCustomToast(message: CharSequence, @ToastUtils.Duration duration: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
+    @Synchronized fun showCustomToast(message: CharSequence?, @ToastUtils.Duration duration: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
         customToast.show(message, duration, judgeAppIsForeground, gravity, xOffset, yOffset, action)
     }
 
@@ -97,13 +96,13 @@ class ToastUtils private constructor(_Context: Context) {
          * @param duration           duration
          * @param action        延迟执行的动作
          */
-        @JvmOverloads fun show(context: Context, message: CharSequence, @Duration duration: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
-            if (StringUtils.isNullOrWhiteSpace(message)) {
+        @JvmOverloads fun show(context: Context, message: CharSequence?, @Duration duration: Int = Toast.LENGTH_SHORT, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>? = null) {
+            if (message.isNullOrBlank()) {
                 return
             }
 
             val toast = Toast(context)
-            val view = LayoutInflater.from(context.applicationContext).inflate(R.layout.ab__toast_layout, null)
+            val view = LayoutInflater.from(context.applicationContext).inflate(R.layout.ab__toast_layout, null, false)
             (view.findViewById(R.id.my_toast) as? TextView)?.text = message
             toast.view = view
 

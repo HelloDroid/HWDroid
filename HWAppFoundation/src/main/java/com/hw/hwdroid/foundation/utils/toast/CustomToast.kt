@@ -48,9 +48,9 @@ class CustomToast constructor(private val context: Context) {
      * @param judgeAppIsForeground  判断APP是否在前台
      * @param action                延迟执行动作
      */
-    @Synchronized fun show(message: CharSequence, @ToastUtils.Duration dur: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
+    @Synchronized fun show(message: CharSequence?, @ToastUtils.Duration dur: Int = Toast.LENGTH_SHORT, judgeAppIsForeground: Boolean = true, gravity: Int = Gravity.CENTER, xOffset: Int = 0, yOffset: Int = 0, action: Consumer<Int>?) {
         // 不在前台不需要提示
-        if (judgeAppIsForeground && !AppUtils.appIsForeground(context)) {
+        if (message.isNullOrBlank() || judgeAppIsForeground && !AppUtils.appIsForeground(context)) {
             return
         }
 
