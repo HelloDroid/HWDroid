@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hw.hwdroid.dialog.R;
@@ -48,10 +49,10 @@ public class ActionSheetDialog extends Dialog {
     private boolean useThemStyle;
 
     public ActionSheetDialog(@NonNull Context context, String title, @NonNull List<String> actions) {
-        this(context, true, title, actions, -1, View.NO_ID);
+        this(context, true, false, title, actions, -1, View.NO_ID);
     }
 
-    public ActionSheetDialog(@NonNull Context context, boolean useThemStyle, String title, @NonNull List<String> actions, int selectedIndex, @ColorRes int selectedColorResId) {
+    public ActionSheetDialog(@NonNull Context context, boolean useThemStyle, boolean alertDialog, String title, @NonNull List<String> actions, int selectedIndex, @ColorRes int selectedColorResId) {
         super(context, R.style.DialogTheme_Full);
 
         this.actions = actions;
@@ -62,6 +63,13 @@ public class ActionSheetDialog extends Dialog {
         setCanceledOnTouchOutside(true);
         view = LayoutInflater.from(context).inflate(R.layout.action_sheet_layout, null);
         setContentView(view);
+
+
+        if (alertDialog) {
+            view.setBackgroundResource(R.drawable.alert_dialog_view_bg);
+            view.findViewById(R.id.cancel_action).setBackgroundResource(R.drawable.alert_dialog_view_bg_white_bottom);
+            ((LinearLayout.LayoutParams) view.findViewById(R.id.cancel_action).getLayoutParams()).topMargin = 0;
+        }
 
         setSelectedColor(selectedColorResId);
         setColorStateList(useThemStyle ? R.color.action_sheet_textcolor_selector_theme : R.color.action_sheet_textcolor_selector);
@@ -74,14 +82,22 @@ public class ActionSheetDialog extends Dialog {
         }
 
         Window window = getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        window.setWindowAnimations(R.style.Slide_FromBottom);
+        if (window != null) {
+            if (alertDialog) {
+                window.setGravity(Gravity.CENTER);
+                WindowManager.LayoutParams layoutParams = window.getAttributes();
+                layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            } else {
+                window.setGravity(Gravity.BOTTOM);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                window.setWindowAnimations(R.style.Slide_FromBottom);
 
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.alpha = 0.9876f;
-        layoutParams.dimAmount = 0.6789f;
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                WindowManager.LayoutParams layoutParams = window.getAttributes();
+                layoutParams.alpha = 0.9876f;
+                layoutParams.dimAmount = 0.6789f;
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            }
+        }
 
         mTitleTv.setText(StringUtils.changeNullOrWhiteSpace(title));
         mTitleTv.setVisibility(StringUtils.isNullOrWhiteSpace(title) ? View.GONE : View.VISIBLE);

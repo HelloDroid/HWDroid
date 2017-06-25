@@ -2,9 +2,41 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarPopupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="actionBarTheme">@style/AppTheme.AppBarOverlay</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Window colors -->
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/hw_abc_primary_text_material_light</item>
+        <item name="android:textColorPrimaryInverse">@color/hw_abc_primary_text_material_dark</item>
+        <item name="android:textColorHint">@color/textColorPrimaryHint</item>
+        <item name="android:textColorHintInverse">@color/hw_abc_hint_foreground_material_dark</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
+
+        <!-- Text styles -->
+        <item name="android:textAppearance">@style/HWTextAppearance</item>
+        <item name="android:textAppearanceLarge">@style/HWTextAppearance.Large</item>
+        <item name="android:textAppearanceMedium">@style/HWTextAppearance.Medium</item>
+        <item name="android:textAppearanceSmall">@style/HWTextAppearance.Small</item>
+
+        <item name="editTextColor">@color/hw_primary_text_light</item>
+        <item name="android:editTextColor">@color/hw_primary_text_light</item>
+        <item name="editTextBackground">@drawable/edit_bg</item>
+        <item name="android:editTextBackground">@drawable/edit_bg</item>
+        <item name="android:editTextStyle">@style/Edit.Style</item>
+
+        <item name="android:expandableListViewStyle">@style/ExpandableListViewStyle.White</item>
+        <item name="android:listViewStyle">@style/ListViewStyle.White</item>
+        <item name="android:listDivider">@drawable/divider_line</item>
+
+        <item name="actionBarSize">@dimen/toolbarSize</item>
 
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 
@@ -12,23 +44,8 @@
         <item name="colorButtonNormal">@color/colorButtonNormal</item>
         <item name="colorControlHighlight">@color/colorPrimaryTranslucent</item>
 
-        <item name="android:textColorHint">@color/textColorPrimaryHint</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimaryDisable</item>
-
-        <item name="editTextColor">@color/textColorPrimary</item>
-        <item name="android:editTextColor">@color/textColorPrimary</item>
-        <item name="editTextBackground">@drawable/edit_bg</item>
-        <item name="android:editTextBackground">@drawable/edit_bg</item>
-        <item name="android:editTextStyle">@style/Edit.Style</item>
-
-        <item name="android:listDivider">@drawable/divider_line</item>
-        <item name="android:listViewStyle">@style/ListViewStyle</item>
-        <item name="android:expandableListViewStyle">@style/ExpandableListViewStyle</item>
-
         <item name="android:windowAnimationStyle">@style/Animation.Activity</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:alertDialogTheme">@style/BaseDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -61,15 +78,13 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <!-- android:Theme -->
     <style name="ThemeHolo" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@drawable/dialog_window_bg</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowContentOverlay">@null</item>
-        <!--<item name="android:windowAnimationStyle">@style/WindowAnimation</item>-->
+        <item name="android:windowBackground">@drawable/dialog_window_bg</item>
 
-        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
 
         <!-- 屏幕背景变暗 -->
         <item name="android:backgroundDimEnabled">true</item>
@@ -94,7 +109,7 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="BaseDialogTheme" parent="Theme.AppCompat.Dialog">
+    <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

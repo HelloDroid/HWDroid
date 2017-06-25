@@ -139,13 +139,9 @@ public class BaseDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog d = super.onCreateDialog(savedInstanceState);
-
-        if (d != null) {
-            d.setCanceledOnTouchOutside(isSpaceable);
-        }
-
-        return d;
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setCanceledOnTouchOutside(isSpaceable);
+        return dialog;
     }
 
     @Override

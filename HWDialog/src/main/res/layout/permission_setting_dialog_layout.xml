@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dip"
     android:layout_height="wrap_content"
-    android:background="@drawable/my_alert_dialog_bg"
+    android:background="@drawable/alert_dialog_bg"
     android:orientation="vertical">
 
     <LinearLayout

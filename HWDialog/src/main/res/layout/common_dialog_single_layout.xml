@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/my_alert_dialog_bg">
+        android:background="@drawable/alert_dialog_view_bg_white">
 
         <LinearLayout
             android:id="@+id/content"
@@ -63,7 +63,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <include layout="@layout/my_alert_dialog_line"/>
+            <include layout="@layout/alert_dialog_line"/>
 
             <TextView
                 android:id="@+id/single_btn"

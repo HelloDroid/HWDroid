@@ -12,8 +12,9 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
     <!-- btn -->
-    <dimen name="btn_h">46dp</dimen>
-    <dimen name="btn_h_mini">40dp</dimen>
+    <dimen name="buttonH">46dp</dimen>
+    <dimen name="buttonMiniH">40dp</dimen>
+    <dimen name="buttonMiniW">80dp</dimen>
 
     <!-- Drawer -->
     <dimen name="drawer_primary">60dp</dimen>
@@ -26,5 +27,8 @@
     <!-- Toolbar Padding size:?attr/actionBarSize-->
     <dimen name="elevationH">4dp</dimen>
     <dimen name="toolbarSize">46dp</dimen>
+
+    <dimen name="tab_IndicatorHeight">2dp</dimen>
+    <dimen name="tabH">46dp</dimen>
 
 </resources>

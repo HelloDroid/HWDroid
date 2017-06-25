@@ -1,7 +1,7 @@
 <resources>
 
     <!-- 自定义对话框的Title -->
-    <style name="HWDialog.Title" parent="BaseDialogTheme">
+    <style name="HWDialog.Title" parent="AlertDialogTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/alertDialogTextColor</item>
@@ -11,14 +11,14 @@
     </style>
 
     <!-- 自定义对话框的Content Message -->
-    <style name="HWDialog.Content" parent="BaseDialogTheme">
+    <style name="HWDialog.Content" parent="AlertDialogTheme">
         <item name="android:textColor">@color/alertDialogTextColor</item>
         <item name="android:textSize">15dp</item>
         <item name="android:gravity">center</item>
     </style>
 
     <!-- 自定义对话框的按钮 -->
-    <style name="HWDialog.Button" parent="BaseDialogTheme">
+    <style name="HWDialog.Button" parent="AlertDialogTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
@@ -28,7 +28,7 @@
         <item name="android:textColor">@color/my_alert_btn_textcolor_selector</item>
     </style>
 
-    <style name="PermissionDialog" parent="BaseDialogTheme">
+    <style name="PermissionDialog" parent="AlertDialogTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -46,7 +46,7 @@
         <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
     </style>
 
-    <style name="DialogTheme" parent="BaseDialogTheme">
+    <style name="DialogTheme" parent="AlertDialogTheme">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>

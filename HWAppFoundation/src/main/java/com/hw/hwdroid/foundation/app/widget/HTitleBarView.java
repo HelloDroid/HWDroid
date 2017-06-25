@@ -249,17 +249,6 @@ public class HTitleBarView extends LinearLayoutCompat {
             titleBarMenuView.removeAllViews();
             titleBarMenuView.setVisibility(View.GONE);
         }
-
-        if (!TextUtils.isEmpty(backTv.getText())) {
-            backBtn.setVisibility(View.GONE);
-            backTv.setVisibility(View.VISIBLE);
-            titleBarBackView.setVisibility(View.VISIBLE);
-        }
-
-        if (!TextUtils.isEmpty(menuTv.getText())) {
-            menuTv.setVisibility(View.VISIBLE);
-            titleBarMenuView.setVisibility(View.VISIBLE);
-        }
     }
 
     /**

@@ -1,18 +1,37 @@
 <resources>
 
-    <style name="MyTextAppearance" parent="@android:style/TextAppearance">
+    <style name="HWTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textColorHint">@color/textColorPrimaryHint</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
+        <item name="android:textColorLink">@color/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="MyTextAppearance.Basic">
+    <style name="HWTextAppearance.Large">
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="HWTextAppearance.Medium">
         <item name="android:textSize">@dimen/text_size_basic</item>
     </style>
 
-    <style name="MyTextAppearance.Dark">
+    <style name="HWTextAppearance.Small">
+        <item name="android:textSize">@dimen/text_size_normal_smallest</item>
+    </style>
+
+    <style name="HWTextAppearance.Basic">
+        <item name="android:textSize">@dimen/text_size_basic</item>
+    </style>
+
+    <style name="HWTextAppearance.Dark">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
+
+    <style name="HWTextAppearance.Button" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@color/hw_abc_primary_text_white_button</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
@@ -20,6 +39,7 @@
     <style name="TextPrimary">
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
         <item name="android:textColorHint">@color/textColorPrimaryHint</item>
     </style>
     <!-- 默认字体style 颜色可以选择 -->
