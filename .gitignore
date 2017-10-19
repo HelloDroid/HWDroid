@@ -53,3 +53,5 @@ workspace.xml
 
 # Keystore files
 *.jks
+
+*.sh
