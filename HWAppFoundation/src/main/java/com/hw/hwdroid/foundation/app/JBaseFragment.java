@@ -27,7 +27,6 @@ import com.hw.hwdroid.foundation.app.annotation.HContentViewAttachToRoot;
 import com.hw.hwdroid.foundation.app.annotation.HContentViewRes;
 import com.hw.hwdroid.foundation.app.annotation.HLoadService;
 import com.hw.hwdroid.foundation.app.model.ViewModel;
-import com.hw.hwdroid.foundation.app.model.ViewModelFragment;
 import com.hw.hwdroid.foundation.app.rx.bus.HRxBus;
 import com.hw.hwdroid.foundation.utils.StringUtils;
 import com.orhanobut.logger.Logger;
@@ -47,7 +46,7 @@ import butterknife.Unbinder;
  * Use the {@link JBaseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class JBaseFragment<ViewModelData extends ViewModelFragment> extends Fragment implements HPermissionListener {
+public class JBaseFragment<ViewModelData extends ViewModel> extends Fragment implements HPermissionListener {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(ViewModel data);
     }
@@ -103,7 +102,7 @@ public class JBaseFragment<ViewModelData extends ViewModelFragment> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        setData((ViewModelData) new ViewModelFragment());
+        setData((ViewModelData) new ViewModel());
 
         try {
             if (context instanceof OnFragmentInteractionListener) {
@@ -278,7 +277,7 @@ public class JBaseFragment<ViewModelData extends ViewModelFragment> extends Frag
      */
     public ViewModelData getData() {
         if (null == mData) {
-            mData = (ViewModelData) new ViewModelFragment();
+            mData = (ViewModelData) new ViewModel();
         }
 
         return mData;

@@ -86,15 +86,7 @@ public class BaseDialogFragment extends DialogFragment {
                 return;
             }
 
-            Activity activity = getActivity();
-            Fragment tarFragment = getTargetFragment();
             dismissSelf();
-
-            //            if (tarFragment != null && tarFragment instanceof SpaceAndCancelCallBack) {
-            //                ((SpaceAndCancelCallBack) tarFragment).onSpaceClick(mDialogTag);
-            //            } else if (activity != null && activity instanceof SpaceAndCancelCallBack) {
-            //                ((SpaceAndCancelCallBack) activity).onSpaceClick(mDialogTag);
-            //            }
         }
     };
 
@@ -146,11 +138,21 @@ public class BaseDialogFragment extends DialogFragment {
 
     @Override
     public void dismiss() {
-        if (getActivity() != null && getActivity() instanceof IBaseDialogFragment) {
+        dismissAllowingStateLoss();
+    }
+
+    @Override
+    public void dismissAllowingStateLoss() {
+        super.dismissAllowingStateLoss();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        if (getActivity() instanceof IBaseDialogFragment) {
             ((IBaseDialogFragment) getActivity()).dismissDialogCallback(getTag());
         }
-
-        super.dismissAllowingStateLoss();
     }
 
     @Override
@@ -202,15 +204,12 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * @return false 滑动返回事件本函数不做处理，由系统调用通用返回方法处理
      */
-    /*public boolean onInteruptSlidebackEvent() {
-        return false;
-    }*/
     public void dismissSelf() {
         if (getActivity() != null && getActivity() instanceof IBaseDialogFragment) {
-            // ((CoBaseActivity) get()).dialogFragmentTags.remove(getTag());
             ((IBaseDialogFragment) getActivity()).dismissDialogCallback(getTag());
         }
 
         HFragmentExchangeController.removeFragment(getFragmentManager(), this);
     }
+
 }

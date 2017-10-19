@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import com.hw.hwdroid.foundation.R
-import com.hw.hwdroid.foundation.app.model.ViewModelActivity
+import com.hw.hwdroid.foundation.app.model.ViewModel
 import com.hw.hwdroid.foundation.app.widget.HWebView
 import com.hw.hwdroid.foundation.utils.StringUtils
 import com.hw.hwdroid.foundation.utils.network.NetWorkUtils
@@ -20,7 +20,7 @@ import com.hw.hwdroid.foundation.utils.network.NetWorkUtils
  * Created by ChenJ on 2017/2/16.
  */
 // @HContentViewRes(R.layout.activity_web_view)
-class HWBaseWebViewActivity<ViewModelData : ViewModelActivity> : HWBaseActivity<ViewModelData>() {
+class HWBaseWebViewActivity<ViewModelData : ViewModel> : HWBaseActivity<ViewModelData>() {
 
     companion object {
         val EXTRA_URL = "web_view_url"

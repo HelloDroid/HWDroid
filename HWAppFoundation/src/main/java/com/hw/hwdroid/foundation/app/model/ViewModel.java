@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * ViewModle Data
+ * ViewModel Data
  * <p>
  * Created by ChenJ on 2017/2/16.
  */

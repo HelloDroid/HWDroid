@@ -1,4 +1,4 @@
-include ':app', ':HWDialog'
+include ':app', ':HWDialog', ':HWdialogEg'
 include ':Logger'
 include ':HWAppTheme'
 include ':HWAppFoundation'

@@ -2,12 +2,13 @@ package com.hw.hwdroid.foundation.app
 
 import android.os.Bundle
 import android.view.View
-import com.hw.hwdroid.foundation.app.model.ViewModelFragment
+import com.hw.hwdroid.foundation.app.model.ViewModel
 
 /**
+ * Lazy Fragment
  * Created by ChenJ on 2017/4/21.
  */
-abstract class HWLazyFragment<ViewModelData : ViewModelFragment> : HWBaseFragment<ViewModelData>() {
+abstract class HWLazyFragment<ViewModelData : ViewModel> : HWBaseFragment<ViewModelData>() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +43,6 @@ abstract class HWLazyFragment<ViewModelData : ViewModelFragment> : HWBaseFragmen
      * @param isVisibleToUser 是否显示出来了
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        // Logger.d("setUserVisibleHint=%b", isVisibleToUser);
         if (isShowing == userVisibleHint) {
             return
         }

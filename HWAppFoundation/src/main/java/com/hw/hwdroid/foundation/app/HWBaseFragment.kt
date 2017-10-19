@@ -20,15 +20,15 @@ import com.hw.hwdroid.foundation.app.annotation.HContentViewAttachToRoot
 import com.hw.hwdroid.foundation.app.annotation.HContentViewRes
 import com.hw.hwdroid.foundation.app.annotation.HLoadService
 import com.hw.hwdroid.foundation.app.model.ViewModel
-import com.hw.hwdroid.foundation.app.model.ViewModelFragment
 import com.hw.hwdroid.foundation.app.rx.bus.HRxBus
 import com.hw.hwdroid.foundation.utils.StringUtils
 import com.orhanobut.logger.Logger
+import java.lang.reflect.ParameterizedType
 
 /**
  * Base Fragment
  */
-open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPermissionListener {
+open class HWBaseFragment<ViewModelData : ViewModel> : Fragment(), HPermissionListener {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(data: ViewModel)
@@ -42,7 +42,7 @@ open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPerm
         protected set
 
 
-    /** 是否可见状态 为了避免和[HWBaseFragment.isVisible]冲突  */
+    /** 是否可见状态 为了避免和[HWBaseFragment.isVisible]冲突 */
     protected var isShowing: Boolean = false
 
     /**
@@ -65,13 +65,10 @@ open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPerm
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        data = (ViewModelFragment() as ViewModelData)
+        data = initViewModel()
 
-        try {
-            if (context is OnFragmentInteractionListener) {
-                listener = context as OnFragmentInteractionListener?
-            }
-        } catch (e: ClassCastException) {
+        if (context is OnFragmentInteractionListener) {
+            listener = context
         }
     }
 
@@ -177,11 +174,55 @@ open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPerm
      * 返回Data
      * @return
      */
-    var data: ViewModelData = ViewModelFragment() as ViewModelData
+    var data: ViewModelData = initViewModel()
         get() = field
         set(value) {
             field = value
         }
+
+
+    @Suppress("UNCHECKED_CAST")
+    private fun initViewModel(): ViewModelData {
+        var data: ViewModelData? = null
+        val viewModelDataClass = getViewModelClass()
+
+        if (viewModelDataClass != null) {
+            try {
+                data = viewModelDataClass.newInstance()
+            } catch (e: Exception) {
+                Logger.e(e)
+            }
+        }
+
+        return data ?: ViewModel() as ViewModelData
+    }
+
+    /**
+     * ViewModel Class
+     * 注意：本方法只针对子类作用，否则异常
+     * @return
+     */
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewModelClass(): Class<ViewModelData>? {
+        try {
+            val type = javaClass.genericSuperclass
+
+            Logger.d(type)
+
+            if (type == null) {
+                return null
+            }
+
+            if (type is ParameterizedType) {
+                return type.getActualTypeArguments()[0] as Class<ViewModelData>?
+            }
+
+            return null
+        } catch (e: Exception) {
+            Logger.e(e)
+            return null
+        }
+    }
 
     /**
      * 加载数据
@@ -221,15 +262,15 @@ open class HWBaseFragment<ViewModelData : ViewModelFragment> : Fragment(), HPerm
             return false
         }
 
-        if (isLoading) {
-            return false
-        }
-
         if (activity.isFinishing) {
             return false
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed) {
+            return false
+        }
+
+        if (isLoading) {
             return false
         }
 

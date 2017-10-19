@@ -27,12 +27,12 @@ import com.hw.hwdroid.dialog.utils.StringUtils
 import com.hw.hwdroid.foundation.R
 import com.hw.hwdroid.foundation.app.annotation.*
 import com.hw.hwdroid.foundation.app.model.ViewModel
-import com.hw.hwdroid.foundation.app.model.ViewModelActivity
 import com.hw.hwdroid.foundation.app.rx.bus.HRxBus
 import com.hw.hwdroid.foundation.app.widget.HTitleBarView
 import com.hw.hwdroid.foundation.utils.ResourceUtils
 import com.orhanobut.logger.Logger
 import common.android.foundation.app.HWActivityStack
+import java.lang.reflect.ParameterizedType
 import java.util.*
 
 /**
@@ -40,7 +40,7 @@ import java.util.*
  * 所有activity父类
  * Created by ChenJ on 2017/2/16.
  */
-open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity(), HPermissionListener, HWBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack, IBaseDialogFragment {
+open class HWBaseActivity<ViewModelData : ViewModel> : AppCompatActivity(), HPermissionListener, HWBaseFragment.OnFragmentInteractionListener, HandleDialogFragmentEvent, SingleDialogFragmentCallBack, IBaseDialogFragment {
 
     /** 用于检测回退Fragment >= 0  */
     protected var backStackEntryCount4Fragment: Int = 0
@@ -54,6 +54,8 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
     private var toolbar: Toolbar? = null
     private var unBinder: Unbinder? = null
     private var addedActionBar: Boolean = false
+
+    val dialogFragmentTags = ArrayList<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,7 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
     }
 
     open protected fun initPrepare() {
+        data = initViewModel()
     }
 
     /**
@@ -320,12 +323,56 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      *
      * @return
      */
-    @Suppress("UNCHECKED_CAST")
-    var data: ViewModelData = ViewModelActivity() as ViewModelData
+    var data: ViewModelData = initViewModel()
         get() = field
         set(value) {
             field = value
         }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun initViewModel(): ViewModelData {
+        var data: ViewModelData? = null
+        val viewModelDataClass = getViewModelClass()
+
+        if (viewModelDataClass != null) {
+            try {
+                data = viewModelDataClass.newInstance()
+            } catch (e: Exception) {
+                Logger.e(e)
+            }
+        }
+
+        return data ?: ViewModel() as ViewModelData
+    }
+
+    /**
+     * ViewModel Class
+     * 注意：本方法只针对子类作用，否则异常
+     * @return
+     */
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewModelClass(): Class<ViewModelData>? {
+        try {
+            // class com.android.common.app.HWBaseActivity
+            // com.android.common.app.HWBaseActivity<com.hw.hwdroid.foundation.app.model.MainViewModel>
+            val type = javaClass.genericSuperclass
+
+            Logger.d(type)
+
+            if (type == null) {
+                return null
+            }
+
+            if (type is ParameterizedType) {
+                return type.getActualTypeArguments()[0] as Class<ViewModelData>?
+            }
+
+            return null
+        } catch (e: Exception) {
+            Logger.e(e)
+            return null
+        }
+    }
 
     /**
      * AppBarLayout
@@ -436,12 +483,16 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
         }
 
         var currDialogFragment: Fragment? = null
-        val size = data.dialogFragmentTags.size
+        val size = dialogFragmentTags.size
 
         if (size > 0) {
             for (index in size - 1 downTo 0) {
-                val tag = data.dialogFragmentTags[index]
+                val tag = dialogFragmentTags[index]
                 currDialogFragment = supportFragmentManager.findFragmentByTag(tag)
+
+                if (currDialogFragment == null) {
+                    dialogFragmentTags.remove(tag)
+                }
 
                 if (currDialogFragment != null) {
                     break
@@ -577,15 +628,15 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
      * @return
      */
     open fun checkLoadingStatus(more: Boolean): Boolean {
-        if (data.isLoadingStatus) {
-            return false
-        }
-
         if (isFinishing) {
             return false
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && isDestroyed) {
+            return false
+        }
+
+        if (data.isLoadingStatus) {
             return false
         }
 
@@ -823,13 +874,13 @@ open class HWBaseActivity<ViewModelData : ViewModelActivity> : AppCompatActivity
 
     override fun showDialogCallback(tag: String?) {
         tag?.let {
-            data.dialogFragmentTags.add(tag)
+            dialogFragmentTags.add(tag)
         }
     }
 
     override fun dismissDialogCallback(tag: String?) {
         tag?.let {
-            data.dialogFragmentTags.remove(tag)
+            dialogFragmentTags.remove(tag)
         }
     }
 

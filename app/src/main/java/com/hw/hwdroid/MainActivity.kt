@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.hw.hwdroid.foundation.app.HWBaseActivity
-import com.hw.hwdroid.foundation.app.model.ViewModelActivity
+import com.hw.hwdroid.foundation.app.model.ViewModel
 
-class MainActivity : HWBaseActivity<ViewModelActivity>() {
+class MainActivity : HWBaseActivity<ViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

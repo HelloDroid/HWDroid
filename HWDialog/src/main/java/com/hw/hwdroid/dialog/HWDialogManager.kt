@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager
 import com.hw.hwdroid.dialog.HDialogManager.DIALOG_REQUEST_CODE
 import com.hw.hwdroid.dialog.model.DialogType
 import com.hw.hwdroid.dialog.model.exchangeModel.DialogExchangeModel
+import com.orhanobut.logger.Logger
 
 /**
  * HW Dialog Manager
@@ -96,7 +97,7 @@ object HWDialogManager {
                 ft.commitAllowingStateLoss()
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            Logger.e(e)
         }
 
         return baseDialogFragment

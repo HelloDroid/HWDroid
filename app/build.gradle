@@ -102,5 +102,5 @@ dependencies {
     compile deps.kotlinStdlib
 
     testCompile deps.junit
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    implementation deps.constraintLayout
 }
